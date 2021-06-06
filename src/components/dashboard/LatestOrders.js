@@ -110,7 +110,13 @@ const LatestOrders = (props) => (
                 </Tooltip>
               </TableCell>
               <TableCell>
-                Status
+                Status Finaceiro
+              </TableCell>
+              <TableCell>
+                Status Prévia
+              </TableCell>
+              <TableCell>
+                Status Reembolso
               </TableCell>
             </TableRow>
           </TableHead>
@@ -128,6 +134,20 @@ const LatestOrders = (props) => (
                 </TableCell>
                 <TableCell>
                   {moment(order.createdAt).format('DD/MM/YYYY')}
+                </TableCell>
+                <TableCell>
+                  <Chip
+                    color="primary"
+                    label={order.status}
+                    size="small"
+                  />
+                </TableCell>
+                <TableCell>
+                  <Chip
+                    color="primary"
+                    label={order.status}
+                    size="small"
+                  />
                 </TableCell>
                 <TableCell>
                   <Chip
