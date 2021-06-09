@@ -8,6 +8,7 @@ const AppContext = React.createContext({
     medico:{},
     procedimentos:[],
     procedimento:{},
+  
     snackBar: {}
 });
 

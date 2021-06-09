@@ -40,13 +40,6 @@ const ModalAddPaciente = ({ classes, open, onClose, edit, pacienteProps }) => {
     const { state, dispatch } = useContext(AppContext)
     const [paciente, setPaciente] = useState({pacienteProps})
 
-    const handleOnchage = (e) =>{
-        setMedico(prevState => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }))
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault();        
         try {

@@ -13,12 +13,18 @@ import Snackbar from './components/snackbar/Snackbar';
 const appContext = {
     keycloak: null,
     pacientes: [],
-    medicos: [],
     paciente:{},
+    medicos: [],
     medico:{},
     procedimentos:[],
     procedimento:{},
-    snackBar: {}
+    snackBar: {},
+    status : [
+      {value: 1, label: "A Agendar"},
+	    {value: 2, label:"Agendado"},
+	    {value: 3, label: "Realizado"},
+	    {value: 4, label: "Cancelado"},
+    ]
 }
 
 const App = () => {
@@ -32,7 +38,6 @@ const App = () => {
         <Snackbar
             color={state.snackBar.color}
             message={state.snackBar.message}
-            open={state.snackBar.open}
         />
         {routing}
       </AppContext.Provider>

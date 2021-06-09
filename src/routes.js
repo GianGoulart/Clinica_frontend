@@ -8,7 +8,7 @@ import Dashboard from 'src/pages/Dashboard';
 import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
-import Settings from 'src/pages/Settings';
+import Procedimento from './pages/Procedimentos/Procedimento';
 
 const routes = [
   {
@@ -19,7 +19,7 @@ const routes = [
       { path: 'account', element: <Account /> },
       { path: 'pacientes', element: <Paciente /> },
       { path: 'medicos', element: <Medico /> },
-      { path: 'settings', element: <Settings /> },
+      { path: 'procedimentos', element: <Procedimento /> },
     ]
   },
   {

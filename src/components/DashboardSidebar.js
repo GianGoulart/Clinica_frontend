@@ -42,7 +42,7 @@ const items = [
     title: 'Médicos'
   },
   {
-    href: '/app/settings',
+    href: '/app/procedimentos',
     icon: BookOpenIcon,
     title: 'Procedimentos'
   },
