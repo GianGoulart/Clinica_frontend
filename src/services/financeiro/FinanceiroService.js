@@ -1,8 +1,8 @@
 import { RequestService } from '../Services';
 
-const PATH = 'procedimentos'
+const PATH = 'financeiro'
 
-function getProcedimentos() {
+function getFinanceiro() {
     return new Promise((resolve, reject) =>
         RequestService
             .get(`${PATH}`,null,null,null)
@@ -11,18 +11,7 @@ function getProcedimentos() {
     );
 }
 
-
-function getProcedimentosById(id) {
-    return new Promise((resolve, reject) =>
-        RequestService
-            .get(`${PATH}/${id}`,null,null,null)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-    );
-}
-
-
-function getProcedimentosByAnything(value) {
+function getFinanceiroByAnything(value) {
     return new Promise((resolve, reject) =>
         RequestService
             .post(`${PATH}/anything`,value,null)
@@ -31,7 +20,7 @@ function getProcedimentosByAnything(value) {
     );
 }
 
-function saveProcedimento(values) {
+function saveFinanceiro(values) {
     return new Promise((resolve, reject) =>
         RequestService
             .post(`${PATH}`, values, null, null)
@@ -40,7 +29,7 @@ function saveProcedimento(values) {
     );
 }
 
-function updateProcedimento(values) {
+function updateFinanceiro(values) {
     return new Promise((resolve, reject) =>
         RequestService
             .put(`${PATH}`, values, null, null)
@@ -49,8 +38,7 @@ function updateProcedimento(values) {
     );
 }
 
-function delProcedimento(id) {
-    console.log(`${PATH}/${id}`)
+function delFinanceiro(id) {
     return new Promise((resolve, reject) =>
         RequestService
             .delete(`${PATH}/${id}`,null, null, null)
@@ -60,22 +48,20 @@ function delProcedimento(id) {
 }
 
 export {
-    getProcedimentos as getProcedimentosService,
-    getProcedimentosById as getProcedimentosByIdService,
-    getProcedimentosByAnything as getProcedimentosByAnythingService,
-    saveProcedimento as saveProcedimentoService,
-    updateProcedimento as updateProcedimentoService,
-    delProcedimento as delProcedimentoService
+    getFinanceiro as getFinanceiroService,
+    getFinanceiroByAnything as getFinanceiroByAnythingService,
+    saveFinanceiro as saveFinanceiroService,
+    updateFinanceiro as updateFinanceiroService,
+    delFinanceiro as delFinanceiroService
 }
 
-const ProcedimentoService = {
-    getProcedimentos,
-    getProcedimentosById,
-    getProcedimentosByAnything,
-    saveProcedimento,
-    updateProcedimento,
-    delProcedimento
+const FinanceiroService = {
+    getFinanceiro,
+    getFinanceiroByAnything,
+    saveFinanceiro,
+    updateFinanceiro,
+    delFinanceiro,
 }
 
 
-export default ProcedimentoService;
+export default FinanceiroService;

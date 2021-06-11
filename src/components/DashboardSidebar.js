@@ -47,25 +47,30 @@ const items = [
     title: 'Procedimentos'
   },
   {
-    href: '/app/account',
+    href: '/app/comercial',
+    icon: DollarSignIcon,
+    title: 'Comercial'
+  },
+  {
+    href: '/app/financeiro',
     icon: DollarSignIcon,
     title: 'Financeiro'
   },
-  {
-    href: '/login',
-    icon: LockIcon,
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: UserPlusIcon,
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: AlertCircleIcon,
-    title: 'Error'
-  }
+  // {
+  //   href: '/login',
+  //   icon: LockIcon,
+  //   title: 'Login'
+  // },
+  // {
+  //   href: '/register',
+  //   icon: UserPlusIcon,
+  //   title: 'Register'
+  // },
+  // {
+  //   href: '/404',
+  //   icon: AlertCircleIcon,
+  //   title: 'Error'
+  // }
 ];
 
 const DashboardSidebar = ({ onMobileClose, openMobile }) => {

@@ -19,6 +19,10 @@ const appContext = {
     procedimentos:[],
     procedimento:{},
     snackBar: {},
+    financeiro_list:[],
+    financeiro:{},
+    comercial_list:[],
+    comercial:{},
     status : [
       {value: 1, label: "A Agendar"},
 	    {value: 2, label:"Agendado"},

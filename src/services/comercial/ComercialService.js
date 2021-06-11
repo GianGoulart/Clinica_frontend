@@ -1,8 +1,8 @@
 import { RequestService } from '../Services';
 
-const PATH = 'procedimentos'
+const PATH = 'comercial'
 
-function getProcedimentos() {
+function getComercial() {
     return new Promise((resolve, reject) =>
         RequestService
             .get(`${PATH}`,null,null,null)
@@ -11,18 +11,7 @@ function getProcedimentos() {
     );
 }
 
-
-function getProcedimentosById(id) {
-    return new Promise((resolve, reject) =>
-        RequestService
-            .get(`${PATH}/${id}`,null,null,null)
-            .then(res => resolve(res))
-            .catch(err => reject(err))
-    );
-}
-
-
-function getProcedimentosByAnything(value) {
+function getComercialByAnything(value) {
     return new Promise((resolve, reject) =>
         RequestService
             .post(`${PATH}/anything`,value,null)
@@ -31,7 +20,7 @@ function getProcedimentosByAnything(value) {
     );
 }
 
-function saveProcedimento(values) {
+function saveComercial(values) {
     return new Promise((resolve, reject) =>
         RequestService
             .post(`${PATH}`, values, null, null)
@@ -40,7 +29,7 @@ function saveProcedimento(values) {
     );
 }
 
-function updateProcedimento(values) {
+function updateComercial(values) {
     return new Promise((resolve, reject) =>
         RequestService
             .put(`${PATH}`, values, null, null)
@@ -49,7 +38,7 @@ function updateProcedimento(values) {
     );
 }
 
-function delProcedimento(id) {
+function delComercial(id) {
     console.log(`${PATH}/${id}`)
     return new Promise((resolve, reject) =>
         RequestService
@@ -60,22 +49,20 @@ function delProcedimento(id) {
 }
 
 export {
-    getProcedimentos as getProcedimentosService,
-    getProcedimentosById as getProcedimentosByIdService,
-    getProcedimentosByAnything as getProcedimentosByAnythingService,
-    saveProcedimento as saveProcedimentoService,
-    updateProcedimento as updateProcedimentoService,
-    delProcedimento as delProcedimentoService
+    getComercial as getComercialService,
+    getComercialByAnything as getComercialByAnythingService,
+    saveComercial as saveComercialervice,
+    updateComercial as updateComercialervice,
+    delComercial as delComercialervice
 }
 
-const ProcedimentoService = {
-    getProcedimentos,
-    getProcedimentosById,
-    getProcedimentosByAnything,
-    saveProcedimento,
-    updateProcedimento,
-    delProcedimento
+const Comercialervice = {
+    getComercial,
+    getComercialByAnything,
+    saveComercial,
+    updateComercial,
+    delComercial
 }
 
 
-export default ProcedimentoService;
+export default Comercialervice;

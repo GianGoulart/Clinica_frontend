@@ -9,6 +9,8 @@ import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 import Procedimento from './pages/Procedimentos/Procedimento';
+import Financeiro from './pages/Financeiro/Financeiro';
+import Comercial from './pages/Comercial/Comercial';
 
 const routes = [
   {
@@ -20,6 +22,8 @@ const routes = [
       { path: 'pacientes', element: <Paciente /> },
       { path: 'medicos', element: <Medico /> },
       { path: 'procedimentos', element: <Procedimento /> },
+      { path: 'financeiro', element: <Financeiro /> },
+      { path: 'comercial', element: <Comercial /> },
     ]
   },
   {
@@ -29,7 +33,7 @@ const routes = [
       { path: 'login', element: <Login /> },
       { path: 'register', element: <Register /> },
       { path: '404', element: <NotFound /> },
-      { path: '/', element: <Navigate to="/app/dashboard" /> },
+      { path: '/', element: <Navigate to="/login" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]
   }
