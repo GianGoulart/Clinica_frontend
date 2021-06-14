@@ -70,7 +70,7 @@ const Login = () => {
                     Sign in on the internal platform
                   </Typography>
                 </Box>
-                <Grid
+                {/* <Grid
                   container
                   spacing={3}
                 >
@@ -105,7 +105,7 @@ const Login = () => {
                       Login with Google
                     </Button>
                   </Grid>
-                </Grid>
+                </Grid> */}
                 <Box
                   sx={{
                     pb: 1,
