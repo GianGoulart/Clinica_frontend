@@ -11,6 +11,7 @@ import Register from 'src/pages/Register';
 import Procedimento from './pages/Procedimentos/Procedimento';
 import Financeiro from './pages/Financeiro/Financeiro';
 import Comercial from './pages/Comercial/Comercial';
+import Acompanhamento from './pages/Acompanhamento/Acompanhamento';
 
 const routes = [
   {
@@ -24,6 +25,7 @@ const routes = [
       { path: 'procedimentos', element: <Procedimento /> },
       { path: 'financeiro', element: <Financeiro /> },
       { path: 'comercial', element: <Comercial /> },
+      { path: 'acompanhamentos', element: <Acompanhamento /> },
     ]
   },
   {

@@ -78,7 +78,7 @@ const FinanceiroListToolbar = ({props, comercial_list}) => {
     e.preventDefault();
     try {
       financeiro.data_pagamento = financeiro.data_pagamento != "" && financeiro.data_pagamento != null ? moment(financeiro.data_pagamento).utc().unix() : 0
-      financeiro.contas = financeiro.contas != null ? parseInt(financeiro.contas) : 0
+      financeiro.conta = financeiro.conta != null ? parseInt(financeiro.conta) : 0
       financeiro.plano_contas = financeiro.plano_contas != null ? parseInt(financeiro.plano_contas) : 0
       
       setLoading(true)

@@ -78,6 +78,7 @@ const Input = props => {
                 placeholder={placeholder}
                 type={type}
                 fullWidth
+
             /> 
   
 };
@@ -89,10 +90,10 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
     const [comercial, setComercial] = useState(comercialProps)
     const classes = useStyles()
 
-    const handleOnchage = (e) =>{
+    const handleOnchange = (e) =>{
         setComercial(prevState => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]:e.target.value
         }))
     }
 
@@ -100,8 +101,9 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
         e.preventDefault();     
         try {
             setLoading(true)
-            comercial.data_emissao_nf = moment(comercial.data_emissao_nf).utc().unix()
-            comercial.data_vencimento = moment(comercial.data_vencimento).utc().unix()
+            comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
+            comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null ? moment(comercial.data_vencimento).utc().unix() : 0
+
             comercial.funcao_medico_part = parseInt(comercial.funcao_medico_part)
             comercial.tipo_pagamento = parseInt(comercial.tipo_pagamento)
             comercial.forma_pagamento = parseInt(comercial.forma_pagamento)
@@ -160,7 +162,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Selecione o Procedimento</InputLabel>
                                             <Select
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                                 native
                                                 value={comercial.id_procedimento}
                                                 label="Selecione o Procedimento"
@@ -179,7 +181,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Médico Participante</InputLabel>
                                             <Select
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                                 native
                                                 value={comercial.id_medico_part}
                                                 label="Médico"
@@ -198,7 +200,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Função Médico</InputLabel>
                                             <Select
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                                 native
                                                 value={comercial.funcao_medico_part}
                                                 name="funcao_medico_part"
@@ -225,7 +227,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Tipo de Pagamento</InputLabel>
                                             <Select
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                                 native
                                                 value={comercial.tipo_pagamento}
                                                 label="Tipo de Pagamento"
@@ -244,7 +246,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Forma de Pagamento</InputLabel>
                                             <Select
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                                 native
                                                 value={comercial.forma_pagamento}
                                                 label="Forma de Pagamento"
@@ -263,6 +265,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <Input type={"number"} name={"qtd_parcelas"} value={comercial.qtd_parcelas} 
                                                 label={"Qtd de Parcelas"} placeholder={'Qtde Parcelas'}
+                                                onChange={e => handleOnchange(e)}
                                             />
                                         </FormControl>
                                     </Grid>  
@@ -276,7 +279,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                                 currencySymbol="R$"
                                                 decimalCharacter=","
                                                 digitGroupSeparator="."
-                                                onChange={e => onChange(e)}
+                                                onChange={e => handleOnchange(e)}
                                             />
                                         </FormControl>
                                     </Grid>                                             
@@ -287,21 +290,41 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                     display: 'flex',
                                 }}
                                 >
-                   
+                    
                                     <Grid item xs={2} className={classes.field}>
-                                        <Input type={"date"} name={"data_emissao_nf"}  
-                                                onChange={e => onChange(e)}
-                                                label={"Data Emissao NF"} placeholder={'Data Emissão NF'}
-                                            value={moment(comercial.data_emissao_nf * 1000).format("YYYY-MM-DD")}
-
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <TextField
+                                                onChange={e => handleOnchange(e)}
+                                                fullWidth
+                                                id="date"
+                                                label="Data de Emissão NF"
+                                                name="data_emissao_nf"
+                                                value={comercial.data_emissao_nf}
+                                                type="date"
+                                                className={classes.textField}
+                                                    InputLabelProps={{
+                                                shrink: true,
+                                                }}
+                                            /> 
+                                        </FormControl>
                                     </Grid>                                 
                                     <Grid item xs={2} className={classes.field}>
-                                        <Input type={"date"} name={"data_vencimento"} 
-                                                onChange={e => onChange(e)}
-                                                value={moment(comercial.data_vencimento * 1000).format("YYYY-MM-DD")}
-                                            label={"Data Vencimento"} placeholder={'Data Vencimento'}
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+
+                                            <TextField
+                                                onChange={e => handleOnchange(e)}                                
+                                                fullWidth
+                                                id="date"
+                                                name="data_vencimento"
+                                                label={"Data Vencimento"} 
+                                                value={comercial.data_vencimento}
+                                                type="date"
+                                                className={classes.textField}
+                                                    InputLabelProps={{
+                                                shrink: true,
+                                                }}
+                                            />       
+                                        </FormControl>
                                     </Grid>                                 
                                 </Box>
                             </Paper>

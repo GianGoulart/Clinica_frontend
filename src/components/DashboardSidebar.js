@@ -56,6 +56,11 @@ const items = [
     icon: DollarSignIcon,
     title: 'Financeiro'
   },
+  {
+    href: '/app/acompanhamentos',
+    icon: BookOpenIcon,
+    title: 'Acompanhamentos'
+  },
   // {
   //   href: '/login',
   //   icon: LockIcon,

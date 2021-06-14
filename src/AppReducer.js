@@ -50,14 +50,16 @@ const AppReducer = (state, action) => {
                 ...state,
                 financeiro: action.payload,
         }
-        case "DELETE_PACIENTE":
-            let pacientes = [...state.pacientes];
-            const indexOf = pacientes.findIndex(item => item.Id === action.payload);            
-            pacientes.splice(indexOf, 1);            
+        case "SET_ACOMPANHAMENTOS":
             return {
                 ...state,
-                pacientes
-            }
+                acompanhamentos: action.payload,
+        }
+        case "SET_ACOMPANHAMENTO":
+            return {
+                ...state,
+                acompanhamento: action.payload,
+        }
         case "SET_SNACKBAR":
             return {
                 ...state,

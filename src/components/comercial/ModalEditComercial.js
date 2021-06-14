@@ -87,7 +87,7 @@ const ModalEditComercial = ({ open, onClose, onChange, medicos, procedimentos, c
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
     const classes = useStyles()
-
+ 
     const onSubmit = async (e) => {
         e.preventDefault();     
         try {
@@ -253,6 +253,7 @@ const ModalEditComercial = ({ open, onClose, onChange, medicos, procedimentos, c
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <Input type={"number"} name={"qtd_parcelas"} value={comercial.qtd_parcelas} 
                                                 label={"Qtd de Parcelas"} placeholder={'Qtde Parcelas'}
+                                                onChange={e => onChange(e)}
                                             />
                                         </FormControl>
                                     </Grid>  

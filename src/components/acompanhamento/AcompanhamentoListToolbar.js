@@ -12,8 +12,8 @@ import {
   TextField
 } from '@material-ui/core';
 import AppContext from '../../AppContext';
-import { ComercialService } from '../../services/Services'
-import ModalAddComercial from "./ModalAddComercial";
+import { AcompanhamentoService } from '../../services/Services'
+import ModalAddAcompanhamento from "./ModalAddAcompanhamento";
 import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
@@ -40,13 +40,19 @@ const tipoPagto = [
   {value: 3, label: "Particular"},
 ]
 
-const ComercialListToolbar = ({props, procedimentos, medicos}) => {
+const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) => {
   const {state, dispatch } = useContext(AppContext)
   const [openModalAdd, setOpenModalAdd] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [comercial, setComercial] = useState({})  
+  const [acompanhamento, setAcompanhamento] = useState({})  
   const classes = useStyles();
   
+  const handleOnchange = (e) => {
+    setAcompanhamento(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+  }))}
+
   const handleOpenModalAdd = () => {
       setOpenModalAdd(true)
   }
@@ -55,37 +61,36 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
     setOpenModalAdd(false)
   }
 
-  const handleOnchange = (e) => {
-    setComercial(prevState => ({
-      ...prevState,
-      [e.target.name]: e.target.value
-  }))}
-
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
-      comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
-      comercial.tipo_pagamento = comercial.tipo_pagamento != null ? parseInt(comercial.tipo_pagamento) : 0
-
+      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
+      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
+      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
+      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
+      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
+      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
+      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
+      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
       setLoading(true)
-      const response = await ComercialService.getComercialByAnything(comercial)
+      const response = await AcompanhamentoService.getAcompanhamentoByAnything(acompanhamento)
+      console.log(response)
       dispatch({
-        type: 'SET_COMERCIAL_LIST',
+        type: 'SET_ACOMPANHAMENTOS',
         payload: response.data == null?{}:response.data,
       })              
     } catch (error) {
-      setComercial({})
+      setAcompanhamento({})
       dispatch({
             type: 'SET_SNACKBAR',
             payload: {
-            message: 'Erro ao buscar os dados comerciais, tente novamente.',
+            message: 'Erro ao buscar os acompanhamentos, tente novamente.',
             color: 'error'
             },
         })
     } finally {
-        setComercial({})
-        setLoading(false)
+      setAcompanhamento({})
+      setLoading(false)
     }      
   };
 
@@ -103,7 +108,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
         variant="contained"
         onClick={handleOpenModalAdd}
       >
-        Add Comercial
+        Add Acompanhamento
       </Button>
     </Box>
     <Grid item xs={12}>
@@ -120,7 +125,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
                 <Select
                     onChange={e => handleOnchange(e)}
                     native
-                    value={comercial.id_procedimento}
+                    value={acompanhamento.id_procedimento}
                     label="Selecione o Procedimento"
                     name="id_procedimento"
                 >
@@ -133,7 +138,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
                 </Select>
             </FormControl>                
           </Grid> 
-          <Grid item xs={2} className={classes.field}>
+          {/* <Grid item xs={2} className={classes.field}>
             <FormControl fullWidth variant="outlined" className={classes.field}>
                 <InputLabel htmlFor="outlined-age-native-simple">Tipo Pagto</InputLabel>
                 <Select
@@ -155,37 +160,27 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
           <Grid item xs={2} className={classes.field}>
             <FormControl fullWidth variant="outlined" className={classes.field}>
               <TextField
-                    onChange={e => handleOnchange(e)}
-                    fullWidth
-                    id="date"
-                    label="Data de Emissão NF"
-                    name="data_emissao_nf"
-                    value={comercial.data_emissao_nf}
-                    type="date"
-                    className={classes.textField}
-                        InputLabelProps={{
-                    shrink: true,
-                    }}
+                onChange={e => handleOnchange(e)}
+                name={"data_emissao_nf"}
+                value={comercial.data_emissao_nf}
+                placeholder={"Data Emissão NF"}
+                type={"date"}
+                fullWidth
               /> 
             </FormControl>                
           </Grid> 
           <Grid item xs={2} className={classes.field}>
             <FormControl fullWidth variant="outlined" className={classes.field}>
               <TextField
-                    onChange={e => handleOnchange(e)}
-                    fullWidth
-                    id="date"
-                    label="Data de Vencimento"
-                    name="data_vencimento"
-                    value={comercial.data_vencimento}
-                    type="date"
-                    className={classes.textField}
-                        InputLabelProps={{
-                    shrink: true,
-                    }}
+                onChange={e => handleOnchange(e)}
+                name={"data_vencimento"}
+                value={comercial.data_vencimento}
+                placeholder={"Data Vencimento"}
+                type={"date"}
+                fullWidth
               /> 
             </FormControl>                
-          </Grid> 
+          </Grid>  */}
           <Grid item xs={2}  className={classes.paper}>
             <Button
               fullWidth
@@ -199,14 +194,12 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
         </Box>
       </Paper>
     </Grid>
-    <ModalAddComercial 
+    <ModalAddAcompanhamento 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 
-      procedimentos={procedimentos}
-      medicos={medicos}
-      comercialProps={{}}
+      procedimentos={procedimentos}      
     />
   </Box>)
 };
 
-export default ComercialListToolbar;
+export default AcompanhamentoListToolbar;

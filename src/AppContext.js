@@ -12,7 +12,8 @@ const AppContext = React.createContext({
     financeiro:{},
     comercial_list:[],
     comercial:{},
-  
+    acompanhamentos:[],
+    acompanhamento:{},
     snackBar: {}
 });
 

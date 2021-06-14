@@ -42,19 +42,19 @@ const FinanceiroListResults = ({ financeiro_list, openHandleEdit, openHandleDele
                   Data Pagamento
                 </TableCell>
                 <TableCell>
-                  Data_Compensacao
+                  Data Compensação
                 </TableCell>
                 <TableCell>
-                Plano_Contas
+                Plano Contas
                 </TableCell>
                 <TableCell>
                 Conta
                 </TableCell>
                 <TableCell>
-                Valor_Ajuste
+                Valor Ajuste
                 </TableCell>
                 <TableCell>
-                Valor_Liquido
+                Valor Líquido
                 </TableCell>
                 <TableCell>
                   Ações
@@ -71,10 +71,10 @@ const FinanceiroListResults = ({ financeiro_list, openHandleEdit, openHandleDele
                     {financeiro.desc_comercial}
                   </TableCell>
                   <TableCell>
-                    {moment(financeiro.data_pagamento * 1000).format("DD/MM/YYYY")}
+                    {financeiro.data_pagamento>0?moment(financeiro.data_pagamento * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {moment(financeiro.data_compensacao * 1000).format("DD/MM/YYYY")}
+                    {financeiro.data_compensacao>0?moment(financeiro.data_compensacao * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
                     {financeiro.plano_contas_desc}

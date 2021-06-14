@@ -23,6 +23,8 @@ const appContext = {
     financeiro:{},
     comercial_list:[],
     comercial:{},
+    acompanhamentos:[],
+    acompanhamento:{},
     status : [
       {value: 1, label: "A Agendar"},
 	    {value: 2, label:"Agendado"},

@@ -198,7 +198,7 @@ const ModalAddFinanceiro = ({ open, onClose, comercial_list, planoContas, contas
                                         </FormControl>
                                     </Grid>  
                                     <Grid item xs={4} className={classes.field}>
-                                    <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <TextField
                                                 onChange={e => handleOnchage(e)}                                
                                                 fullWidth

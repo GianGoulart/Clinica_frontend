@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,13 +14,10 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import moment from "moment";
-import { ProcedimentoService } from 'src/services/Services';
 
-const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete}) => {
+const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-  const [procedimento, setProcedimento] = useState()
-  const [loading, setLoading] = useState(false)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -42,28 +39,28 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   Procedimento
                 </TableCell>
                 <TableCell>
-                  Médico Participante
+                  Protocolo
                 </TableCell>
                 <TableCell>
-                  Função
+                  Prévia
                 </TableCell>
                 <TableCell>
-                  Parcelas
+                  Confirmação
                 </TableCell>
                 <TableCell>
-                  Valor
+                  Finalização
                 </TableCell>
                 <TableCell>
-                  Tipo Pgto
+                  Convenio
                 </TableCell>
                 <TableCell>
-                  Forma Pgto
+                  Liberação
                 </TableCell>
                 <TableCell>
-                  Emissão NF
+                  Repasse Paciente
                 </TableCell>
                 <TableCell>
-                  Vencimento
+                  Repasse Clinica
                 </TableCell>
                 <TableCell>
                   Ações
@@ -71,43 +68,43 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
               </TableRow>
             </TableHead>
             <TableBody>
-              {comercial_list.slice(0, limit).map((comercial) => (
+              {acompanhamentos.slice(0, limit).map((acompanhamento) => (
                 <TableRow
                   hover
-                  key={comercial.id}
+                  key={acompanhamento.id}
                 >
                   <TableCell>
-                    {comercial.desc_procedimento}
+                    {acompanhamento.desc_procedimento}
                   </TableCell>                
                   <TableCell>
-                    {comercial.nome_medico_part}
+                    {acompanhamento.envio_protocolo>0?moment(acompanhamento.envio_protocolo* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.funcao_medico_part_desc}
+                    {acompanhamento.solicitacao_previa>0?moment(acompanhamento.solicitacao_previa* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.qtd_parcelas}
+                    {acompanhamento.confirmacao_solicitacao>0?moment(acompanhamento.confirmacao_solicitacao* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    R${comercial.valor_parcelas}
+                    {acompanhamento.finalizacao_previa>0?moment(acompanhamento.finalizacao_previa* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.tipo_pagamento_desc}
+                    {acompanhamento.envio_convenio>0?moment(acompanhamento.envio_convenio* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.forma_pagamento_desc}
+                    {acompanhamento.liberacao>0?moment(acompanhamento.liberacao* 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.data_emissao_nf>0?moment(comercial.data_emissao_nf * 1000).format("DD/MM/YYYY"):""}
+                    {acompanhamento.repasse_paciente>0?moment(acompanhamento.repasse_paciente * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
-                    {comercial.data_vencimento>0?moment(comercial.data_vencimento * 1000).format("DD/MM/YYYY"):""}
+                    {acompanhamento.repasse_clinica>0?moment(acompanhamento.repasse_clinica * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>                  
-                    <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(comercial)}>
+                    <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(acompanhamento)}>
                       <Edit />
                     </IconButton>
-                    <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete(comercial.id)}>
+                    <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete(acompanhamento.id)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -119,7 +116,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={comercial_list.length}
+        count={acompanhamentos.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -131,8 +128,8 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
   );
 };
 
-ComercialListResults.propTypes = {
-  comercial_list: PropTypes.array.isRequired
+AcompanhamentoListResults.propTypes = {
+  acompanhamentos: PropTypes.array.isRequired
 };
 
-export default ComercialListResults;
+export default AcompanhamentoListResults;
