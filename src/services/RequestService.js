@@ -8,7 +8,7 @@ function setUrl(url, id = null) {
 
 async function request(config) {
 	config = {
-		baseURL:"https://35.225.45.151:5055/v1/", 	//"http://localhost:5055/v1/",
+		baseURL:"http://35.225.45.151:5055/v1/", 	
 		method: "GET",
 		timeout: 60000,
 		...config,
@@ -17,7 +17,6 @@ async function request(config) {
 			...config.headers,
 		},
 	};
-
 	return new Promise((resolve, reject) =>
 		axios
 			.request(config)
