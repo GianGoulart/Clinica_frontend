@@ -8,7 +8,7 @@ function setUrl(url, id = null) {
 
 async function request(config) {
 	config = {
-		baseURL:"http://35.225.45.151:5055/v1/", 	
+		baseURL:"https://clinica-abrao-api-7w3sjlxr4a-uc.a.run.app/v1/", 	
 		method: "GET",
 		timeout: 60000,
 		...config,
