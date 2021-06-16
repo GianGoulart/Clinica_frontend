@@ -259,14 +259,11 @@ const ModalEditComercial = ({ open, onClose, onChange, medicos, procedimentos, c
                                     </Grid>  
                                     <Grid item xs={2} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
-                                            <CurrencyTextField
+                                            <TextField
                                                 label="Valor"
                                                 variant="outlined"
                                                 name="valor_parcelas"
                                                 value={comercial.valor_parcelas}
-                                                currencySymbol="R$"
-                                                decimalCharacter=","
-                                                digitGroupSeparator="."
                                                 onChange={e => onChange(e)}
                                             />
                                         </FormControl>

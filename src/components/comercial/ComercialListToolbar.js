@@ -127,7 +127,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
                     <option aria-label="Selecione" value=""> </option> 
                     {procedimentos.map((item, index) => (
                         <option key={index} value={item.id}>
-                            {item.nome_medico} - {item.nome_paciente} - {item.nome_procedimento} - {moment(item.data * 1000).format("DD/MM/YYYY")}
+                             {item.nome_paciente}
                         </option>
                     ))}
                 </Select>

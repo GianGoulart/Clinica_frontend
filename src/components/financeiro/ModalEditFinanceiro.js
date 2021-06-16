@@ -224,28 +224,26 @@ const ModalEditFinanceiro = ({ open, onClose, onChange, comercial_list, financei
                                         </FormControl>
                                     </Grid> 
                                     <Grid item xs={2} className={classes.field}>
-                                        <CurrencyTextField
+                                    <TextField
                                             label="Valor Ajuste"
                                             variant="outlined"
                                             name="valor_ajuste"
                                             value={financeiro.valor_ajuste}
-                                            currencySymbol="R$"
-                                            decimalCharacter=","
-                                            digitGroupSeparator="."
-                                            onChange={e => onChange(e)}
-                                        />
+                                            onChange={e => onChange(e)}                                
+                                            fullWidth
+                                            />
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
-                                        <CurrencyTextField
-                                            label="Valor Liquido"
-                                            variant="outlined"
-                                            name="valor_liquido"
-                                            value={financeiro.valor_liquido}
-                                            currencySymbol="R$"
-                                            decimalCharacter=","
-                                            digitGroupSeparator="."
-                                            onChange={e => onChange(e)}
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <TextField
+                                                label="Valor Liquido"
+                                                variant="outlined"
+                                                name="valor_liquido"
+                                                value={financeiro.valor_liquido}
+                                                onChange={e => onChange(e)}                                
+                                                fullWidth
+                                            />
+                                        </FormControl>
                                     </Grid>                            
                                 </Box>
                                 <Box
