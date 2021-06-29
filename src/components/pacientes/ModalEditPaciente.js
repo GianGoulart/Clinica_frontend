@@ -143,6 +143,16 @@ const ModalEditPaciente = ({ classes, open, onClose, onChange, paciente}) => {
                             >   
                                 <Input label={"Telefone"} placeholder={'Digite o telefone do Paciente'}/>
                             </MaskedInput>
+                            <MaskedInput
+                                value={paciente.telefone2}
+                                name="telefone2"
+                                mask="(99)99999-9999"
+                                alwaysShowMask
+                                onChange={e => onChange(e)}
+                                maskChar={null}
+                            >   
+                                <Input label={"Telefone2"} placeholder={'Digite o telefone do Paciente'}/>
+                            </MaskedInput>
                         </>
                     </DialogContent>
                     <DialogActions>

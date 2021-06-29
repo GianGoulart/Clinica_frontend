@@ -158,7 +158,7 @@ const PacienteListToolbar = (props) => {
     <ModalAddPaciente 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 
-      pacienteProps={{nome:"",cpf:"",telefone:"",plano:"",acomodacao:"",convenio:""}}
+      pacienteProps={{nome:"",cpf:"",telefone:"",telefone2:"",plano:"",acomodacao:"",convenio:""}}
     />
   </Box>)
 };

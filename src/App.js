@@ -19,8 +19,6 @@ const appContext = {
     procedimentos:[],
     procedimento:{},
     snackBar: {},
-    financeiro_list:[],
-    financeiro:{},
     comercial_list:[],
     comercial:{},
     acompanhamentos:[],
@@ -44,6 +42,7 @@ const App = () => {
         <Snackbar
             color={state.snackBar.color}
             message={state.snackBar.message}
+            open={state.snackBar.open}
         />
         {routing}
       </AppContext.Provider>

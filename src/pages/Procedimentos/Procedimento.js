@@ -55,7 +55,7 @@ const Procedimento = () => {
 
     const handleCloseModalDelete = () => setOpenDelete(false)
     const handleOpenModalDelete = (id) => setOpenDelete({open:true,id})
-    const handleOpenModalEdit = (procedimento) =>{
+    const handleOpenModalEdit = (procedimento) => {
       setProcedimento(procedimento)
       setOpenEdit({open:true})
     }
@@ -63,13 +63,6 @@ const Procedimento = () => {
         setProcedimento({})
         setOpenEdit(false)
     }    
-
-    const handleOnchageEdit = (e) =>{
-        setProcedimento(prevState => ({
-            ...prevState,
-            [e.target.name]:e.target.name == "data"? moment(e.target.value).utc().unix():e.target.value
-          }))
-    }
 
   return (
     <>
@@ -94,8 +87,8 @@ const Procedimento = () => {
                   :null}
                 </Box>
            )}
-           <ModalEditProcedimento open={openEdit.open} onClose={handleCloseModalEdit} onChange={handleOnchageEdit}
-            pacientes={state.pacientes} medicos={state.medicos} procedimento={procedimento}/>
+           <ModalEditProcedimento open={openEdit.open} onClose={handleCloseModalEdit} 
+            pacientes={state.pacientes} medicos={state.medicos} procedimentoEdit={procedimento}/>
            <ModalDeleteProcedimento open={openDelete.open} onClose={handleCloseModalDelete} id={openDelete.id} />
         </Container>    
       </Box>

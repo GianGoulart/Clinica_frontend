@@ -9,6 +9,7 @@ import {
 import { Close } from '@material-ui/icons';
 import SnackbarStyle from './SnackbarStyle';
 import AppContext from '../../AppContext';
+import { red } from '@material-ui/core/colors';
 
 const COLORS = {
     error: 'error',
@@ -18,6 +19,16 @@ const COLORS = {
     success: 'success',
     warning: 'warning',
 }
+
+const styles = {
+    snackbarStyleViaContentProps: {
+      backgroundColor: "orange"
+    },
+    snackbarStyleViaNestedContent: {
+      backgroundColor: "lightgreen",
+      color: "black"
+    }
+  };
 
 const Snackbar = ({
     classes,
@@ -40,18 +51,20 @@ const Snackbar = ({
             autoHideDuration={4000}
             open={open}
             onClose={handleClose}
-        >
+          >
             <SnackbarContent
+                style={{
+                    backgroundColor:color,
+                 }}
                 action={
                     <IconButton
                         className={classes.closeIconButton}
                         size='small'
                         onClick={handleClose}
-                    >
+                    >{console.log(color)}
                         <Close fontSize='small' />
                     </IconButton>
                 }
-                className={color ? classes[`${color}Color`] : undefined}
                 message={message}
             />
         </MSnackbar>

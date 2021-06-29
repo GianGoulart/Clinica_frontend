@@ -18,7 +18,7 @@ import {
     FormControl
 
 } from "@material-ui/core";
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyFormat from 'react-currency-format';
 import { ProcedimentoService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddProcedimentoStyle from "./ModalAddProcedimentoStyle"
@@ -77,7 +77,7 @@ const locais = [
 const esteira = [
 	{value: 1, label: "Convenio"},
 	{value: 2, label: "Particular"},
-	{value: 3, label: "Misto"},
+	{value: 3, label: "Convenio + Extra"},
 ]
 
 const Input = props => {
@@ -86,7 +86,7 @@ const Input = props => {
                 {...inputProps}
                 ref={inputRef}
                 margin="dense"
-                label={label}
+                label={label===undefined?"Valor":label}
                 id={name}
                 name={name}
                 value={value}
@@ -97,10 +97,24 @@ const Input = props => {
   
 };
 
-const ModalEditProcedimento = ({ open, onClose, onChange, procedimento, pacientes, medicos}) => {
+const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, medicos}) => {
     const {  handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
+    const [procedimento, setProcedimento] = useState({procedimentoEdit})
+
+    useEffect(()=>{
+        setProcedimento(procedimentoEdit)
+    },[procedimentoEdit])
+
+    const onChange = (e) =>{
+        setProcedimento(prevState => ({
+            ...prevState,
+            [e.target.name]:e.target.name == "data"? moment(e.target.value).utc().unix():e.target.value
+          }))
+    }
+
+
     const classes = useStyles()
 
     const onSubmit = async (e) => {
@@ -113,7 +127,6 @@ const ModalEditProcedimento = ({ open, onClose, onChange, procedimento, paciente
                 procedimento.status = parseInt(procedimento.status)
                 procedimento.local_procedimento = parseInt(procedimento.local_procedimento)
                 procedimento.valor = parseFloat(procedimento.valor)
-                console.log(procedimento)            
                 const response = await ProcedimentoService.updateProcedimento(procedimento)
                 dispatch({
                     type: 'SET_SNACKBAR',
@@ -149,7 +162,7 @@ const ModalEditProcedimento = ({ open, onClose, onChange, procedimento, paciente
             maxWidth="lg"
             fullWidth
         >  
-            <DialogTitle className={classes.dialogTitle}>{procedimento.data} - Alterar Procedimento</DialogTitle>               
+            {console.log(procedimento)}<DialogTitle className={classes.dialogTitle}>Alterar Procedimento</DialogTitle>               
                 <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(onSubmit(e))}>
                 <DialogContent className={classes.dialogContent}>
                         <Grid item xs={12}>
@@ -173,7 +186,7 @@ const ModalEditProcedimento = ({ open, onClose, onChange, procedimento, paciente
                                                 <option aria-label="Selecione" value=""> </option> 
                                                 {pacientes.map((item, index) => (
                                                     <option key={index} value={item.id}>
-                                                        {item.nome}
+                                                        {item.nome} 
                                                     </option>
                                                 ))}
                                             </Select>
@@ -264,17 +277,25 @@ const ModalEditProcedimento = ({ open, onClose, onChange, procedimento, paciente
                                 }}
                                 >
                                     <Grid item xs={2} className={classes.field}>
-                                        <CurrencyTextField
-                                            label="Valor"
-                                            variant="outlined"
-                                            name="valor"
-                                            value={procedimento.valor}
-                                            currencySymbol="R$"
-                                            outputFormat="string"
-                                            decimalCharacter="."
-                                            digitGroupSeparator=","
-                                            onChange={e => onChange(e)}
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <CurrencyFormat 
+                                                customInput={Input}
+                                                prefix={"R$"}
+                                                decimalScale={2}
+                                                thousandSeparator={","}
+                                                decimalSeparator={"."}
+                                                thousandSpacing={'3'}
+                                                allowNegative ={false}
+                                                value={procedimento.valor}                                                
+                                                onValueChange={(values) => { const {formattedValue, value} = values;
+                                                    setProcedimento(prevState => ({
+                                                        ...prevState,
+                                                        "valor": value
+                                                    }))
+                                                }}
+                                            />
+                                        </FormControl>
+
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
                                         <TextField

@@ -68,7 +68,7 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
               </TableRow>
             </TableHead>
             <TableBody>
-              {acompanhamentos.slice(0, limit).map((acompanhamento) => (
+              {acompanhamentos.slice(limit*page, limit*(page+1)).map((acompanhamento) => (
                 <TableRow
                   hover
                   key={acompanhamento.id}

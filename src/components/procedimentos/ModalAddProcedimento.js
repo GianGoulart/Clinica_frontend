@@ -17,13 +17,15 @@ import {
     makeStyles,
     FormControl
 } from "@material-ui/core";
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyFormat from 'react-currency-format';
 import { ProcedimentoService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddProcedimentoStyle from "./ModalAddProcedimentoStyle"
 import MaskedInput from "react-input-mask";
 import { useForm } from "react-hook-form";
 import moment from "moment";
+import Snackbar from "../snackbar/Snackbar";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -76,7 +78,7 @@ const locais = [
 const esteira = [
 	{value: 1, label: "Convenio"},
 	{value: 2, label: "Particular"},
-	{value: 3, label: "Misto"},
+	{value: 3, label: "Convenio + Extra"},
 ]
 
 const Input = props => {
@@ -84,7 +86,7 @@ const Input = props => {
     return  <TextField
                 {...inputProps}
                 ref={inputRef}
-                label={label}
+                label={label===undefined?"Valor":label}
                 id={name}
                 name={name}
                 value={value}
@@ -100,6 +102,8 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
     const [procedimento, setProcedimento] = useState(procedimentoProps)
+
+
     const classes = useStyles()
 
     const handleOnchage = (e) =>{
@@ -107,11 +111,25 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
             ...prevState,
             [e.target.name]: e.target.value
         }))
+        console.log(procedimento)
     }
 
     const onSubmit = async (e) => {
         e.preventDefault();     
         try {
+
+            if (parseInt(procedimento.status) == 3 && moment(procedimento.data).utc().unix() > moment().utc().unix()) {
+                dispatch({
+                    type: 'SET_SNACKBAR',
+                    payload: {
+                        message: 'ERRO: Status Realizado com uma data Futura.',
+                        color: 'red',
+                    },
+                })
+    
+                return
+            } 
+
             setLoading(true)
             procedimento.data = moment(procedimento.data).utc().unix()
             procedimento.procedimento = parseInt(procedimento.procedimento)
@@ -123,7 +141,8 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
             dispatch({
                 type: 'SET_SNACKBAR',
                 payload: {
-                message: 'Procedimento cadastrado com sucesso.'
+                    message: 'Procedimento cadastrado com sucesso.',
+                    color: 'green'
                 },
             })
         } catch (error) {
@@ -131,8 +150,8 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
             dispatch({
                 type: 'SET_SNACKBAR',
                 payload: {
-                message: 'Erro ao cadastrar procedimento, tente novamente.',
-                color: 'error'
+                    message: 'Erro ao cadastrar procedimento, tente novamente.',
+                    color: 'red'
                 },
             })
         } finally {
@@ -149,6 +168,12 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
     };
     
     return (
+        <>
+        <Snackbar
+            color={state.snackBar.color}
+            message={state.snackBar.message}
+        />
+
         <Dialog
             open={open}
             onClose={onClose}
@@ -270,17 +295,23 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                 }}
                                 >
                                     <Grid item xs={2} className={classes.field}>
-                                        <CurrencyTextField
-                                            label="Valor"
-                                            variant="outlined"
-                                            name="valor"
-                                            value={procedimento.valor}
-                                            currencySymbol="R$"
-                                            outputFormat="string"
-                                            decimalCharacter="."
-                                            digitGroupSeparator=","
-                                            onChange={e => handleOnchage(e)}                                
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <CurrencyFormat 
+                                                customInput={Input}
+                                                prefix={"R$"}
+                                                decimalScale={2}
+                                                thousandSeparator={","}
+                                                decimalSeparator={"."}
+                                                thousandSpacing={'3'}
+                                                allowNegative ={false}
+                                                value={procedimento.valor}                                                
+                                                onValueChange={(values) => { const {formattedValue, value} = values;
+                                                setProcedimento(prevState => ({
+                                                    ...prevState,
+                                                    "valor": value
+                                                }))}}
+                                            />
+                                        </FormControl>
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
                                         <TextField
@@ -359,6 +390,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                     </DialogActions>
                 </form>
         </Dialog>
+        </>
     );
 };
 

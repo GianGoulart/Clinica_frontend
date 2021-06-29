@@ -35,7 +35,7 @@ const MedicoListToolbar = (props) => {
   const { state, dispatch } = useContext(AppContext)
   const [openModalAdd, setOpenModalAdd] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [medico, setMedico] = useState({nome:"",cpf:"",razao_social:""})  
+  const [medico, setMedico] = useState({nome:"",especialidade:""})  
   const classes = useStyles();
   
   const searches = [
@@ -46,16 +46,10 @@ const MedicoListToolbar = (props) => {
       mask:"",
     },
     {
-      name:"razao_social",
-      label:"Razão Social",
-      value: medico.razao_social,
-      mask:"",
-    },
-    {
-      name:"cpf",
-      label:"CPF do Médico",
-      value: medico.cpf,
-      mask:"999.999.999-99"
+      name:"especialidade",
+      label:"Especialidade do Médico",
+      value: medico.especialidade,
+      mask:""
     }
   ]
   const handleOpenModalAdd = () => {
@@ -155,7 +149,7 @@ const MedicoListToolbar = (props) => {
     <ModalAddMedico 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 
-      medicoProps={{nome:"",cpf:"",banco_pf:"",agencia_pf:"",conta_pf:"",razao_social:"",banco_pj:"",agencia_pj:"",conta_pj:"",cnpj:""}}
+      medicoProps={{nome:"",especialidade:""}}
     />
   </Box>)
 };

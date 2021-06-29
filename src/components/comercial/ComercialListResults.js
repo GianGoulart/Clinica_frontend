@@ -39,7 +39,28 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
             <TableHead>
               <TableRow>
                 <TableCell>
+                  Data
+                </TableCell>
+                <TableCell>
+                  Paciente
+                </TableCell>
+                <TableCell>
                   Procedimento
+                </TableCell>
+                <TableCell>
+                  Médico Principal
+                </TableCell>
+                <TableCell>
+                  Data
+                </TableCell>
+                <TableCell>
+                  Paciente
+                </TableCell>
+                <TableCell>
+                  Procedimento
+                </TableCell>
+                <TableCell>
+                  Médico Principal
                 </TableCell>
                 <TableCell>
                   Médico Participante
@@ -51,7 +72,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   Parcelas
                 </TableCell>
                 <TableCell>
-                  Valor
+                  Valor Parcela
                 </TableCell>
                 <TableCell>
                   Tipo Pgto
@@ -66,18 +87,54 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   Vencimento
                 </TableCell>
                 <TableCell>
+                  Data Pagamento
+                </TableCell>
+                <TableCell>
+                  Data Compensação
+                </TableCell>
+                <TableCell>
+                  Plano Contas
+                </TableCell>
+                <TableCell>
+                  Conta
+                </TableCell>
+                <TableCell>
+                  Valor Líquido
+                </TableCell>
+                <TableCell>
                   Ações
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {comercial_list.slice(0, limit).map((comercial) => (
+              {comercial_list.slice(limit*page, limit*(page+1)).map((comercial) => (
                 <TableRow
                   hover
                   key={comercial.id}
                 >
                   <TableCell>
-                    {comercial.desc_procedimento}
+                    {comercial.procedimento.data>0?moment(comercial.procedimento.data * 1000).format("DD/MM/YYYY"):""}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.procedimento.nome_paciente}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.procedimento.nome_procedimento}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.nome_medico}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.procedimento.data>0?moment(comercial.procedimento.data * 1000).format("DD/MM/YYYY"):""}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.procedimento.nome_paciente}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.procedimento.nome_procedimento}
+                  </TableCell>                
+                  <TableCell>
+                    {comercial.nome_medico}
                   </TableCell>                
                   <TableCell>
                     {comercial.nome_medico_part}
@@ -89,7 +146,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                     {comercial.qtd_parcelas}
                   </TableCell>
                   <TableCell>
-                    R${comercial.valor_parcelas}
+                  {comercial.valor_parcelas.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
                   </TableCell>
                   <TableCell>
                     {comercial.tipo_pagamento_desc}
@@ -103,6 +160,22 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   <TableCell>
                     {comercial.data_vencimento>0?moment(comercial.data_vencimento * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
+                  <TableCell>
+                    {comercial.data_pagamento>0?moment(comercial.data_pagamento * 1000).format("DD/MM/YYYY"):""}
+                  </TableCell>
+                  <TableCell>
+                    {comercial.data_compensacao>0?moment(comercial.data_compensacao * 1000).format("DD/MM/YYYY"):""}
+                  </TableCell>
+                  <TableCell>
+                    {comercial.plano_contas_desc}
+                  </TableCell>
+                  <TableCell>
+                    {comercial.conta_desc}
+                  </TableCell>
+                  <TableCell>
+                  {comercial.valor_liquido.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
+                  </TableCell>
+
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(comercial)}>
                       <Edit />

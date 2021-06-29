@@ -16,7 +16,7 @@ import {
     makeStyles,
     FormControl
 } from "@material-ui/core";
-import CurrencyTextField from '@unicef/material-ui-currency-textfield'
+import CurrencyFormat from 'react-currency-format';
 import { ComercialService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddComercialStyle from "./ModalAddComercialStyle"
@@ -83,18 +83,35 @@ const Input = props => {
   
 };
 
-const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialProps}) => {
+const ModalAddComercial = ({ open, onClose, medicos, procedimentos, planoContas, contas, comercialProps}) => {
     const {  handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
     const [comercial, setComercial] = useState(comercialProps)
+    const [procedimento, setProcedimento] = useState({})
+
     const classes = useStyles()
 
     const handleOnchange = (e) =>{
         setComercial(prevState => ({
             ...prevState,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         }))
+
+        if (e.target.name == "id_procedimento"){
+            const p = procedimentos
+            .filter(procedimento => procedimento.id == e.target.value) // inline
+            .map(p => p);
+
+            setProcedimento(p[0])
+        }
+
+    }
+
+    const handleOnclose = (e) =>{
+        setComercial({})
+        setProcedimento({})
+        onClose()
     }
 
     const onSubmit = async (e) => {
@@ -110,7 +127,13 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
             comercial.qtd_parcelas = parseInt(comercial.qtd_parcelas)
             comercial.valor_parcelas = parseFloat(comercial.valor_parcelas)
             
-            console.log(comercial)
+            comercial.data_pagamento = comercial.data_pagamento != "" && comercial.data_pagamento != null ? moment(comercial.data_pagamento).utc().unix() : 0
+            comercial.data_compensacao = comercial.data_compensacao != "" && comercial.data_compensacao != null ? moment(comercial.data_compensacao).utc().unix() : 0
+            comercial.conta = comercial.conta != null ? parseInt(comercial.conta) : 0
+            comercial.plano_contas = comercial.plano_contas != null ? parseInt(comercial.plano_contas) : 0
+            comercial.valor_ajuste = parseFloat(comercial.valor_ajuste)
+            comercial.valor_liquido = parseFloat(comercial.valor_liquido)
+
             const response = await ComercialService.saveComercial(comercial)
             dispatch({
                 type: 'SET_SNACKBAR',
@@ -143,7 +166,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={handleOnclose}
             maxWidth="lg"
             fullWidth
         >  
@@ -262,22 +285,42 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                         </FormControl>
                                     </Grid>  
                                     <Grid item xs={2}  className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" disabled className={classes.field}>
+
+                                            <Input type={"text"} name={"valor"} value={procedimento.valor} 
+                                                 placeholder={'Valor Procedimento'} 
+                                            />
+
+                                        </FormControl>
+                                    </Grid>  
+                                    <Grid item xs={2}  className={classes.field}>
+                                        <FormControl  fullWidth variant="outlined" className={classes.field}>
                                             <Input type={"number"} name={"qtd_parcelas"} value={comercial.qtd_parcelas} 
                                                 label={"Qtd de Parcelas"} placeholder={'Qtde Parcelas'}
-                                                onChange={e => handleOnchange(e)}
+                                                onChange={e => handleOnchange(e)} 
                                             />
                                         </FormControl>
                                     </Grid>  
                                     <Grid item xs={2} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
-                                            <TextField
-                                                label="Valor"
-                                                variant="outlined"
-                                                name="valor_parcelas"
-                                                value={comercial.valor_parcelas}
-                                                onChange={e => handleOnchange(e)}
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>                                                           
+                                            {(comercial.valor_parcelas == undefined || comercial.valor_parcelas == 0) && <InputLabel htmlFor="outlined-age-native-simple">Valor Parcela</InputLabel>}
+                                            <CurrencyFormat 
+                                                customInput={Input}
+                                                prefix={"R$"}
+                                                decimalScale={2}
+                                                thousandSeparator={","}
+                                                decimalSeparator={"."}
+                                                thousandSpacing={'3'}
+                                                allowNegative ={false}
+                                                value={comercial.valor_parcelas}                                                
+                                                onValueChange={(values) => { const {formattedValue, value} = values;
+                                                    setComercial(prevState => ({
+                                                        ...prevState,
+                                                        "valor_parcelas": value
+                                                    }))
+                                                }}
                                             />
+
                                         </FormControl>
                                     </Grid>                                             
                                 </Box>
@@ -323,8 +366,132 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, comercialPro
                                             />       
                                         </FormControl>
                                     </Grid>                                 
+                                    <Grid item xs={4} className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <InputLabel htmlFor="outlined-age-native-simple">Plano de Contas</InputLabel>
+                                            <Select
+                                                onChange={e => handleOnchange(e)}                                
+                                                native
+                                                value={comercial.planoContas}
+                                                label="Plano de Contas"
+                                                name="plano_contas"
+                                            >
+                                                <option aria-label="Selecione" value="" />
+                                                {planoContas.map((item, index) => (
+                                                    <option key={index} value={item.value}>
+                                                        {item.label}
+                                                    </option>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid> 
+                                    <Grid item xs={2} className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <InputLabel htmlFor="outlined-age-native-simple">Contas</InputLabel>
+                                            <Select
+                                                onChange={e => handleOnchange(e)}                                
+                                                native
+                                                value={comercial.conta}
+                                                name="conta"
+                                                label="Contas"
+                                            >
+                                                <option aria-label="Selecione" value="" />
+                                                {contas.map((item, index) => (
+                                                    <option key={index} value={item.value}>
+                                                        {item.label}
+                                                    </option>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid> 
                                 </Box>
                             </Paper>
+                            <Paper >
+                                <Box
+                                className={classes.field}
+                                sx={{
+                                    display: 'flex',
+                                }}
+                                >                                   
+                                    <Grid item xs={4}  className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <TextField
+                                                onChange={e => handleOnchange(e)}                                
+                                                fullWidth
+                                                id="date"
+                                                label="Data de Pagamento"
+                                                name="data_pagamento"
+                                                value={comercial.data_pagamento}
+                                                type="date"
+                                                className={classes.textField}
+                                                    InputLabelProps={{
+                                                shrink: true,
+                                                }}
+                                            />       
+                                        </FormControl>
+                                    </Grid>  
+                                    <Grid item xs={4} className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <TextField
+                                                onChange={e => handleOnchange(e)}                                
+                                                fullWidth
+                                                id="date"
+                                                label="Data de Compensação"
+                                                name="data_compensacao"
+                                                value={comercial.data_compensacao}
+                                                type="date"
+                                                className={classes.textField}
+                                                    InputLabelProps={{
+                                                shrink: true,
+                                                }}
+                                            />       
+                                        </FormControl>
+                                    </Grid> 
+                                    <Grid item xs={2} className={classes.field}>
+                                    <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        {(comercial.valor_ajuste == undefined || comercial.valor_ajuste == "") && <InputLabel htmlFor="outlined-age-native-simple">Valor Ajuste</InputLabel>}
+                                            <CurrencyFormat 
+                                                customInput={Input}
+                                                prefix={"R$"}
+                                                decimalScale={2}
+                                                thousandSeparator={","}
+                                                decimalSeparator={"."}
+                                                thousandSpacing={'3'}
+                                                allowNegative ={false}
+                                                value={comercial.valor_ajuste}                                                
+                                                onValueChange={(values) => { const {formattedValue, value} = values;
+                                                    setComercial(prevState => ({
+                                                        ...prevState,
+                                                        "valor_ajuste": value
+                                                    }))
+                                                }}
+                                            />
+                                        </FormControl>
+                                    </Grid>                            
+                                </Box>
+                                <Box
+                                    className={classes.field}
+                                    sx={{
+                                        display: 'flex',
+                                    }}
+                                    >
+                                    <Grid item xs={12} className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                            <TextField
+                                                margin="dense"
+                                                label={"Observação"}
+                                                name={"obs"}
+                                                value={comercial.obs}
+                                                placeholder={"Observação"}
+                                                type="text"
+                                                onChange={e => handleOnchange(e)}                                
+                                                fullWidth
+                                            />                                         
+                                        </FormControl>
+                                    </Grid> 
+                                </Box>
+                            </Paper>
+
                         </Grid>
                     </DialogContent>
                     <DialogActions>

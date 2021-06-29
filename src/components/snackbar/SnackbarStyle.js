@@ -1,7 +1,7 @@
 const SnackbarStyle = theme => {
     return {
         errorColor: {
-            backgroundColor: theme.palette.error.dark,
+            backgroundColor: "#ba000d",
         },
         infoColor: {
             backgroundColor: theme.palette.info.dark,
@@ -13,10 +13,10 @@ const SnackbarStyle = theme => {
             backgroundColor: theme.palette.secondary.dark,
         },
         successColor: {
-            backgroundColor: theme.palette.success.dark,
+            backgroundColor: "#00a300",
         },
         warningColor: {
-            backgroundColor: theme.palette.warning.dark,
+            backgroundColor: "#c66900",
         },
         closeIconButton: {
             color: theme.palette.common.white,

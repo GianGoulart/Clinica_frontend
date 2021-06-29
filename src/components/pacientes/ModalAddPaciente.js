@@ -162,6 +162,19 @@ const ModalAddPaciente = ({ classes, open, onClose, edit, pacienteProps }) => {
                                 >   
                                     <Input label={"Telefone"} placeholder={'Digite o telefone do Paciente'}/>
                                 </MaskedInput>
+                                <MaskedInput
+                                    value={paciente.telefone2}
+                                    name="telefone2"
+                                    mask="(99)99999-9999"
+                                    alwaysShowMask
+                                    onChange={e => setPaciente(prevState => ({
+                                        ...prevState,
+                                        [e.target.name]: e.target.value
+                                    }))}
+                                    maskChar={null}
+                                >   
+                                    <Input label={"Telefone2"} placeholder={'Digite o telefone do Paciente'}/>
+                                </MaskedInput>
                             </>
                     </DialogContent>
                     <DialogActions>

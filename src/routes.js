@@ -9,7 +9,6 @@ import Login from 'src/pages/Login';
 import NotFound from 'src/pages/NotFound';
 import Register from 'src/pages/Register';
 import Procedimento from './pages/Procedimentos/Procedimento';
-import Financeiro from './pages/Financeiro/Financeiro';
 import Comercial from './pages/Comercial/Comercial';
 import Acompanhamento from './pages/Acompanhamento/Acompanhamento';
 
@@ -23,7 +22,6 @@ const routes = [
       { path: 'pacientes', element: <Paciente /> },
       { path: 'medicos', element: <Medico /> },
       { path: 'procedimentos', element: <Procedimento /> },
-      { path: 'financeiro', element: <Financeiro /> },
       { path: 'comercial', element: <Comercial /> },
       { path: 'acompanhamentos', element: <Acompanhamento /> },
     ]

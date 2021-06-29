@@ -61,7 +61,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
               </TableRow>
             </TableHead>
             <TableBody>
-              {procedimentos.slice(0, limit).map((procedimento) => (
+              {procedimentos.slice(limit*page, limit*(page+1)).map((procedimento) => (
                 <TableRow
                   hover
                   key={procedimento.id}
@@ -82,7 +82,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                     {procedimento.nome_status}
                   </TableCell>
                   <TableCell>
-                    {procedimento.valor}
+                    {procedimento.valor.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
                   </TableCell>
                   <TableCell>
                     {procedimento.desc_esteira}

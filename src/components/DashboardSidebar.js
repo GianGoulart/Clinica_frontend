@@ -52,11 +52,6 @@ const items = [
     title: 'Comercial'
   },
   {
-    href: '/app/financeiro',
-    icon: DollarSignIcon,
-    title: 'Financeiro'
-  },
-  {
     href: '/app/acompanhamentos',
     icon: BookOpenIcon,
     title: 'Acompanhamentos'

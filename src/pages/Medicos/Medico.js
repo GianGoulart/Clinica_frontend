@@ -42,7 +42,6 @@ const Medico = () => {
     const handleCloseModalDelete = () => setOpenDelete(false)
     const handleOpenModalDelete = (id) => setOpenDelete({open:true,id})
     const handleOpenModalEdit = (medico) =>{
-        console.log(medico)
         setMedico(medico)
         setOpenEdit({open:true})
     }

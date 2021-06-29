@@ -64,13 +64,6 @@ const Comercial = () => {
         setOpenEdit(false)
     }    
 
-    const handleOnchageEdit = (e) =>{
-      setComercial(prevState => ({
-            ...prevState,
-            [e.target.name]:e.target.name == "data_emissao_nf" || e.target.name == "data_vencimento" ? moment(e.target.value).utc().unix():e.target.value
-          }))
-    }
-
   return (
     <>
       <Box
@@ -94,8 +87,8 @@ const Comercial = () => {
                   :null}
                 </Box>
            )}
-           <ModalEditComercial open={openEdit.open} onClose={handleCloseModalEdit} onChange={handleOnchageEdit}
-             comercial={comercial} procedimentos={state.procedimentos} medicos={state.medicos}/>
+           <ModalEditComercial open={openEdit.open} onClose={handleCloseModalEdit} 
+             comercialEdit={comercial} procedimentos={state.procedimentos} medicos={state.medicos}/>
            <ModalDeleteComercial open={openDelete.open} onClose={handleCloseModalDelete} id={openDelete.id} />
         </Container>    
       </Box>

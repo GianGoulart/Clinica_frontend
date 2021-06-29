@@ -38,31 +38,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                   Nome
                 </TableCell>
                 <TableCell>
-                  CPF
-                </TableCell>
-                <TableCell>
-                  CNPJ
-                </TableCell>
-                <TableCell>
-                  Razão Social
-                </TableCell>
-                <TableCell>
-                  Banco PF
-                </TableCell>
-                <TableCell>
-                  Agência PF
-                </TableCell>
-                <TableCell>
-                  Conta PF
-                </TableCell>
-                <TableCell>
-                  Banco PJ
-                </TableCell>
-                <TableCell>
-                  Agência PJ
-                </TableCell>
-                <TableCell>
-                  Conta PJ
+                  Especialidade
                 </TableCell>
                 <TableCell>
                   Ações
@@ -70,7 +46,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {medicos.slice(0, limit).map((medico) => (
+              {medicos.slice(limit*page, limit*(page+1)).map((medico) => (
                 <TableRow
                   hover
                   key={medico.id}
@@ -79,31 +55,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                     {medico.nome}
                   </TableCell>
                   <TableCell>
-                    {medico.cpf}
-                  </TableCell>
-                  <TableCell>
-                    {medico.cnpj}
-                  </TableCell>
-                  <TableCell>
-                    {medico.razao_social}
-                  </TableCell>
-                  <TableCell>
-                    {medico.banco_pf}
-                  </TableCell>
-                  <TableCell>
-                    {medico.agencia_pf}
-                  </TableCell>
-                  <TableCell>
-                    {medico.conta_pf}
-                  </TableCell>
-                  <TableCell>
-                    {medico.banco_pj}
-                  </TableCell>
-                  <TableCell>
-                    {medico.agencia_pj}
-                  </TableCell>
-                  <TableCell>
-                    {medico.conta_pj}
+                    {medico.especialidade}
                   </TableCell>
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(medico)}>

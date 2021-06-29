@@ -19,12 +19,13 @@ import getInitials from 'src/utils/getInitials';
 const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
- 
+
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
 
   const handlePageChange = (event, newPage) => {
+    console.log(newPage)
     setPage(newPage);
   };
 
@@ -58,12 +59,15 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                   Telefone
                 </TableCell>
                 <TableCell>
+                  Telefone 2
+                </TableCell>
+                <TableCell>
                   Ações
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {pacientes.slice(0, limit).map((paciente) => (
+              {pacientes.slice(limit*page, limit*(page+1)).map((paciente) => (
                 <TableRow
                   hover
                   key={paciente.id}
@@ -100,6 +104,9 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                   </TableCell>
                   <TableCell>
                     {paciente.telefone}
+                  </TableCell>
+                  <TableCell>
+                    {paciente.telefone2}
                   </TableCell>
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(paciente)}>
