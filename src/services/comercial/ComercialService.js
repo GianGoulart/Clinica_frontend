@@ -20,6 +20,16 @@ function getComercialByAnything(value) {
     );
 }
 
+
+function getComercialByProcedimento(id) {
+    return new Promise((resolve, reject) =>
+        RequestService
+            .get(`${PATH}/byProcedimento/${id}`,null,null)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+    );
+}
+
 function saveComercial(values) {
     return new Promise((resolve, reject) =>
         RequestService
@@ -51,6 +61,7 @@ function delComercial(id) {
 export {
     getComercial as getComercialService,
     getComercialByAnything as getComercialByAnythingService,
+    getComercialByProcedimento as getComercialByProcedimentoService,
     saveComercial as saveComercialervice,
     updateComercial as updateComercialervice,
     delComercial as delComercialervice
@@ -59,6 +70,7 @@ export {
 const Comercialervice = {
     getComercial,
     getComercialByAnything,
+    getComercialByProcedimento,
     saveComercial,
     updateComercial,
     delComercial

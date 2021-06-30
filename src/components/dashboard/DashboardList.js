@@ -17,7 +17,7 @@ import {
   TablePagination
 } from '@material-ui/core';
 
-const DashboardList = ({dashboardlist}) => {
+const DashboardList = ({dashboardlist, openHandleEdit}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -79,7 +79,7 @@ const DashboardList = ({dashboardlist}) => {
                   >
                     <TableCell>
                       <Button
-                        onClick={(e)=>{alert("tada")}}
+                        onClick={()=>openHandleEdit(dash.id_procedimento)}
                       >
                         <Chip
                           color={dash.status_financeiro=="OK"?"primary":"error"}
@@ -90,18 +90,26 @@ const DashboardList = ({dashboardlist}) => {
                       </Button>
                     </TableCell>
                     <TableCell>
+                    <Button
+                        onClick={()=>openHandleEdit(dash.id_procedimento)}
+                      >
                       <Chip
                         color={dash.status_previa==" - "?"primary":"error"}
                         label={dash.status_previa==" - "?"OK":"Divergente"}
                         size="small"
                       />
+                      </Button>
                     </TableCell>
                     <TableCell>
+                    <Button
+                        onClick={()=>openHandleEdit(dash.id_procedimento)}
+                      >
                       <Chip
                         color={dash.status_reembolso==" - "?"primary":"error"}
                         label={dash.status_reembolso==" - "?"OK":"Divergente"}
                         size="small"
                       />
+                      </Button>
                     </TableCell>
                     <TableCell>
                       {dash.nome_paciente}

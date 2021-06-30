@@ -15,7 +15,8 @@ import {
     InputLabel,
     Box,
     makeStyles,
-    FormControl
+    FormControl,
+    FormHelperText
 } from "@material-ui/core";
 import CurrencyFormat from 'react-currency-format';
 import { ProcedimentoService } from '../../services/Services'
@@ -111,7 +112,6 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
             ...prevState,
             [e.target.name]: e.target.value
         }))
-        console.log(procedimento)
     }
 
     const onSubmit = async (e) => {
@@ -192,7 +192,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                 }}
                                 >
                                     <Grid item xs={4} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Selecione o Paciente</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -209,9 +209,10 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                 ))}
                                             </Select>
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid> 
                                     <Grid item xs={4} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Médico</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -228,9 +229,10 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                 ))}
                                             </Select>
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid> 
                                     <Grid item xs={4} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Procedimento</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -247,6 +249,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                 ))}
                                             </Select>
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid> 
                                                              
                                 </Box>
@@ -257,7 +260,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                 }}
                                 >                                   
                                     <Grid item xs={4}  className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Local</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -274,6 +277,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                 ))}
                                             </Select>
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid>  
                                     <Grid item xs={8} className={classes.field}>
                                         <MaskedInput
@@ -295,7 +299,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                 }}
                                 >
                                     <Grid item xs={2} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <CurrencyFormat 
                                                 customInput={Input}
                                                 prefix={"R$"}
@@ -312,6 +316,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                 }))}}
                                             />
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
                                         <TextField
@@ -328,7 +333,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                         />
                                     </Grid>                                 
                                     <Grid item xs={3}  className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Esteira</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -344,10 +349,11 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                     </option>
                                                 ))}
                                             </Select>
+                                            <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                         </FormControl>
                                     </Grid>  
                                     <Grid item xs={3}  className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <InputLabel htmlFor="outlined-age-native-simple">Status</InputLabel>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
@@ -363,6 +369,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                                     </option>
                                                 ))}
                                             </Select>
+                                            <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                         </FormControl>
                                     </Grid>       
                                 </Box>

@@ -192,6 +192,7 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                                     <Grid item xs={6} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Selecione o Procedimento</InputLabel>
+                                        {procedimentos.length > 0 ? 
                                             <Select
                                                 onChange={e => onChange(e)}
                                                 native
@@ -205,26 +206,32 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                                                         {item.nome_medico} - {item.nome_paciente} - {item.nome_procedimento} - {moment(item.data * 1000).format("DD/MM/YYYY")}
                                                     </option>
                                                 ))}
-                                            </Select>
+                                            </Select> : 
+                                            null
+
+                                        }
                                         </FormControl>
                                     </Grid> 
                                     <Grid item xs={4} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
                                             <InputLabel htmlFor="outlined-age-native-simple">Médico Participante</InputLabel>
-                                            <Select
-                                                onChange={e => onChange(e)}
-                                                native
-                                                value={comercial.id_medico_part}
-                                                label="Médico"
-                                                name="id_medico_part"
-                                            >
-                                                <option aria-label="Selecione" value="" />
-                                                {medicos.map((item, index) => (
-                                                    <option key={index} value={item.id}>
-                                                        {item.nome}
-                                                    </option>
-                                                ))}
-                                            </Select>
+                                            {medicos.length>0?
+                                                <Select
+                                                    onChange={e => onChange(e)}
+                                                    native
+                                                    value={comercial.id_medico_part}
+                                                    label="Médico"
+                                                    name="id_medico_part"
+                                                >
+                                                    <option aria-label="Selecione" value="" />
+                                                    {medicos.map((item, index) => (
+                                                        <option key={index} value={item.id}>
+                                                            {item.nome}
+                                                        </option>
+                                                    ))}
+                                                </Select> :
+                                                null
+                                            }
                                         </FormControl>
                                     </Grid> 
                                     <Grid item xs={2} className={classes.field}>
