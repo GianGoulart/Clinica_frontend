@@ -13,6 +13,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
+import moment from 'moment';
 
 const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
@@ -47,6 +48,9 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                   Local
                 </TableCell>
                 <TableCell>
+                  Data
+                </TableCell>                
+                <TableCell>
                   Status
                 </TableCell>
                 <TableCell>
@@ -77,6 +81,9 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                   </TableCell>
                   <TableCell>
                     {procedimento.nome_local}
+                  </TableCell>
+                  <TableCell>
+                  {procedimento.data>0?moment(procedimento.data * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
                   <TableCell>
                     {procedimento.nome_status}

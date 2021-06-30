@@ -3,6 +3,7 @@ import MedicoService from './medicos/MedicoService';
 import ProcedimentoService from './procedimentos/ProcedimentoService';
 import ComercialService from './comercial/ComercialService';
 import AcompanhamentoService from './acompanhamento/AcompanhamentoService';
+import DashboardService from './dashboard/DashboardService';
 import RequestService from './RequestService';
 
 export {
@@ -11,5 +12,6 @@ export {
     MedicoService,
     ProcedimentoService,
     ComercialService,
-    AcompanhamentoService
+    AcompanhamentoService,
+    DashboardService
 }

@@ -35,20 +35,15 @@ const AppReducer = (state, action) => {
                 ...state,
                 comercial_list: action.payload,
         }
+        case "SET_PRODUCAO_LIST":
+            return {
+                ...state,
+                producao_list: action.payload,
+        }
         case "SET_COMERCIAL":
             return {
                 ...state,
                 comercial: action.payload,
-        }
-        case "SET_FINANCEIRO_LIST":
-            return {
-                ...state,
-                financeiro_list: action.payload,
-        }
-        case "SET_FINANCEIRO":
-            return {
-                ...state,
-                financeiro: action.payload,
         }
         case "SET_ACOMPANHAMENTOS":
             return {

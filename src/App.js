@@ -19,6 +19,7 @@ const appContext = {
     procedimentos:[],
     procedimento:{},
     snackBar: {},
+    producao_list:[],
     comercial_list:[],
     comercial:{},
     acompanhamentos:[],
