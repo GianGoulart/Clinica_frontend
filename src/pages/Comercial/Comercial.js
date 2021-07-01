@@ -4,10 +4,9 @@ import ComercialListResults from '../../components/comercial/ComercialListResult
 import ComercialListToolbar from '../../components/comercial/ComercialListToolbar';
 import AppContext from 'src/AppContext';
 import Loading from 'src/components/loading/Loading';
-import { ComercialService, MedicoService, PacienteService, ProcedimentoService } from 'src/services/Services';
+import { ComercialService, MedicoService,  ProcedimentoService } from 'src/services/Services';
 import ModalEditComercial from 'src/components/comercial/ModalEditComercial';
 import ModalDeleteComercial from 'src/components/comercial/ModalDeleteComercial';
-import moment from "moment";
 
 const Comercial = () => {
     const [loading, setLoading] = useState(false)
@@ -15,7 +14,6 @@ const Comercial = () => {
     const [openEdit, setOpenEdit] = useState({open:false})
     const [openDelete, setOpenDelete] = useState({open:false})
     const [comercial, setComercial] = useState({})
-    
     useEffect(() => {
       (async () => {
         try {
@@ -25,19 +23,6 @@ const Comercial = () => {
             type: 'SET_COMERCIAL_LIST',
             payload: comercialList.data,
           })              
-
-          const procedimentos = await ProcedimentoService.getProcedimentos();
-          dispatch({
-            type: 'SET_PROCEDIMENTOS',
-            payload: procedimentos.data,
-          })              
-
-          const medicos = await MedicoService.getMedicos();
-          dispatch({
-            type: 'SET_MEDICOS',
-            payload: medicos.data,
-          })              
-
         } catch (error) {
           setLoading(false)
           dispatch({
@@ -63,7 +48,7 @@ const Comercial = () => {
       setComercial({})
         setOpenEdit(false)
     }    
-
+ 
   return (
     <>
       <Box

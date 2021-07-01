@@ -34,33 +34,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tipoPagto = [
-  {value: 1, label: "Reembolso"},
-  {value: 2, label: "Extra"},
-  {value: 3, label: "Particular"},
-]
-
-
-const planoContas = [
-  {value: 1, label: "01.01.01 - Receitas Consultório"},
-  {value: 2, label: "01.01.02 - Receitas Hospital"},
-  {value: 3, label: "01.01.03 - Receitas Materiais"},
-  {value: 4, label: "01.02.01 - Ajuste Conciliação de Receitas"},
-  {value: 5, label: "01.02.02 - Faturamento Terceiros"},
-  {value: 6, label: "01.02.03 - Receitas Taxas de Cirurgia"},
-  {value: 7, label: "01.01.03 - Alugueis de Sala"},
-  {value: 8, label: "01.01.03 - Outras Receitas"},
-]
-
-const contas = [
-  {value: 1, label : "_Terceiros"},
-  {value: 2, label : "Din Caixa"},
-  {value: 3, label : "Din Cofre"},
-  {value: 4, label : "BB Clinica"},
-  {value: 5, label : "BB Nucleo"},
-  {value: 6, label : "Safra Cartões"},
-]
-
 
 const ComercialListToolbar = ({props, procedimentos, medicos}) => {
   const {state, dispatch } = useContext(AppContext)
@@ -147,7 +120,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
                     name="tipo_pagamento"
                 >
                     <option aria-label="Selecione" value=""> </option> 
-                    {tipoPagto.map((item, index) => (
+                    {state.tipoPagto.map((item, index) => (
                         <option key={index} value={item.value}>
                             {item.label}
                         </option>
@@ -202,14 +175,15 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
         </Box>
       </Paper>
     </Grid>
+
     <ModalAddComercial 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 
       procedimentos={procedimentos}
       medicos={medicos}
       comercialProps={{}}
-      planoContas={planoContas}
-      contas={contas}
+      planoContas={state.planoContas}
+      contas={state.contas}
     />
   </Box>)
 };
