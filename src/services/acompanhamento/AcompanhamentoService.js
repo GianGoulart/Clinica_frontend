@@ -20,6 +20,15 @@ function getAcompanhamentoByAnything(value) {
     );
 }
 
+function getAcompanhamentoByProcedimento(id) {
+    return new Promise((resolve, reject) =>
+        RequestService
+            .get(`${PATH}/byProcedimento/${id}`,null,null)
+            .then(res => resolve(res))
+            .catch(err => reject(err))
+    );
+}
+
 function saveAcompanhamento(values) {
     return new Promise((resolve, reject) =>
         RequestService
@@ -51,6 +60,7 @@ function delAcompanhamento(id) {
 export {
     getAcompanhamento as getAcompanhamentoService,
     getAcompanhamentoByAnything as getAcompanhamentoByAnythingService,
+    getAcompanhamentoByProcedimento as getAcompanhamentoByProcedimentoService,
     saveAcompanhamento as saveAcompanhamentoService,
     updateAcompanhamento as updateAcompanhamentoService,
     delAcompanhamento as delAcompanhamentoService
@@ -59,6 +69,7 @@ export {
 const AcompanhamentoService = {
     getAcompanhamento,
     getAcompanhamentoByAnything,
+    getAcompanhamentoByProcedimento,
     saveAcompanhamento,
     updateAcompanhamento,
     delAcompanhamento

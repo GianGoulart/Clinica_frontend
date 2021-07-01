@@ -415,7 +415,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, planoContas,
                                 className={classes.field}
                                 sx={{
                                     display: 'flex',
-                                }}
+                                }} 
                                 >                                   
                                     <Grid item xs={3} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" disabled className={classes.field}>

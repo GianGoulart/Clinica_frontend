@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
     withStyles,
     Dialog,
@@ -21,7 +21,7 @@ import AppContext from '../../AppContext';
 import ModalAddAcompanhamentoStyle from "./ModalAddAcompanhamentoStyle"
 import { useForm } from "react-hook-form";
 import moment from "moment";
-
+ 
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -59,11 +59,25 @@ const Input = props => {
   
 };
 
-const ModalEditAcompanhamento = ({ open, onClose, onChange, procedimentos, acompanhamento}) => {
+const ModalEditAcompanhamento = ({ open, onClose, procedimentos, acompanhamentoEdit}) => {
     const {  handleSubmit } = useForm();
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
+    const [acompanhamento, setAcompanhamento] = useState({acompanhamentoEdit})
     const classes = useStyles()
+
+    useEffect(()=>{
+        setAcompanhamento(acompanhamentoEdit)
+    },[acompanhamentoEdit])
+
+    const onChange = (e) =>{
+        setAcompanhamento(prevState => ({
+            ...prevState,
+            [e.target.name]:e.target.name == "id_procedimento"?e.target.value:moment(e.target.value).utc().unix()
+          }))
+
+    }
+
 
     const onSubmit = async (e) => {
         e.preventDefault();     

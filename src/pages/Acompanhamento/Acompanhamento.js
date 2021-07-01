@@ -24,15 +24,7 @@ const Acompanhamento = () => {
           dispatch({
             type: 'SET_ACOMPANHAMENTOS',
             payload: acompanhamentos.data,
-          })              
-
-          const procedimentos = await ProcedimentoService.getProcedimentos();
-          dispatch({
-            type: 'SET_PROCEDIMENTOS',
-            payload: procedimentos.data,
-          })              
-
-
+          })           
         } catch (error) {
           setLoading(false)
           dispatch({
@@ -58,14 +50,7 @@ const Acompanhamento = () => {
       setAcompanhamento({})
         setOpenEdit(false)
     }    
-
-    const handleOnchageEdit = (e) =>{
-      setAcompanhamento(prevState => ({
-            ...prevState,
-            [e.target.name]:e.target.name == "id_procedimento"?e.target.value:moment(e.target.value).utc().unix()
-          }))
-    }
- 
+  
   return (
     <>
       <Box
@@ -89,8 +74,8 @@ const Acompanhamento = () => {
                   :null}
                 </Box>
            )}
-           <ModalEditAcompanhamento open={openEdit.open} onClose={handleCloseModalEdit} onChange={handleOnchageEdit}
-             acompanhamento={acompanhamento} procedimentos={state.procedimentos} />
+           <ModalEditAcompanhamento open={openEdit.open} onClose={handleCloseModalEdit}
+             acompanhamentoEdit={acompanhamento} procedimentos={state.procedimentos} />
            <ModalDeleteAcompanhamento open={openDelete.open} onClose={handleCloseModalDelete} id={openDelete.id} />
         </Container>    
       </Box>

@@ -64,14 +64,6 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
-      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
-      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
-      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
-      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
-      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
-      // comercial.data_emissao_nf = comercial.data_emissao_nf != "" && comercial.data_emissao_nf != null ? moment(comercial.data_emissao_nf).utc().unix() : 0
-      // comercial.data_vencimento = comercial.data_vencimento != "" && comercial.data_vencimento != null?moment(comercial.data_vencimento).utc().unix():0
       setLoading(true)
       const response = await AcompanhamentoService.getAcompanhamentoByAnything(acompanhamento)
       console.log(response)
@@ -138,49 +130,6 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
                 </Select>
             </FormControl>                
           </Grid> 
-          {/* <Grid item xs={2} className={classes.field}>
-            <FormControl fullWidth variant="outlined" className={classes.field}>
-                <InputLabel htmlFor="outlined-age-native-simple">Tipo Pagto</InputLabel>
-                <Select
-                    onChange={e => handleOnchange(e)}
-                    native
-                    value={comercial.tipo_pagamento}
-                    label="Selecione"
-                    name="tipo_pagamento"
-                >
-                    <option aria-label="Selecione" value=""> </option> 
-                    {tipoPagto.map((item, index) => (
-                        <option key={index} value={item.value}>
-                            {item.label}
-                        </option>
-                    ))}
-                </Select>
-            </FormControl>                
-          </Grid> 
-          <Grid item xs={2} className={classes.field}>
-            <FormControl fullWidth variant="outlined" className={classes.field}>
-              <TextField
-                onChange={e => handleOnchange(e)}
-                name={"data_emissao_nf"}
-                value={comercial.data_emissao_nf}
-                placeholder={"Data Emissão NF"}
-                type={"date"}
-                fullWidth
-              /> 
-            </FormControl>                
-          </Grid> 
-          <Grid item xs={2} className={classes.field}>
-            <FormControl fullWidth variant="outlined" className={classes.field}>
-              <TextField
-                onChange={e => handleOnchange(e)}
-                name={"data_vencimento"}
-                value={comercial.data_vencimento}
-                placeholder={"Data Vencimento"}
-                type={"date"}
-                fullWidth
-              /> 
-            </FormControl>                
-          </Grid>  */}
           <Grid item xs={2}  className={classes.paper}>
             <Button
               fullWidth

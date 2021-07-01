@@ -6,11 +6,13 @@ import {
   Grid
 } from '@material-ui/core';
 import DashboardList from 'src/components/dashboard/DashboardList';
-import { DashboardService, MedicoService, ProcedimentoService } from 'src/services/Services';
+import { AcompanhamentoService, DashboardService, MedicoService, ProcedimentoService } from 'src/services/Services';
 import AppContext from 'src/AppContext';
 import ModalEditComercial from 'src/components/comercial/ModalEditComercial';
 import Comercialervice from 'src/services/comercial/ComercialService';
 import ModalAddComercial from 'src/components/comercial/ModalAddComercial';
+import ModalEditAcompanhamento from 'src/components/acompanhamento/ModalEditAcompanhamento';
+import ModalAddAcompanhamento from 'src/components/acompanhamento/ModalAddAcompanhamento';
 
 
 const Dashboard = () => {
@@ -18,7 +20,10 @@ const Dashboard = () => {
   const { state, dispatch } = useContext(AppContext)
   const [openEdit, setOpenEdit] = useState({open:false})
   const [openModalAdd, setOpenModalAdd] = useState(false)
+  const [openEditAcompanhamento, setOpenEditAcompanhamento] = useState({open:false})
+  const [openModalAddAcompanhamento, setOpenModalAddAcompanhamento] = useState(false)
   const [comercial, setComercial] = useState({})
+  const [acompanhamento, setAcompanhamento] = useState({})
 
   useEffect(() => {
     (async () => {
@@ -87,16 +92,51 @@ const Dashboard = () => {
 
     }
   
+    const handleOpenModalEditAcompanhamento = (id_procedimento) =>{
+      (async () => {
+        try {
+          setLoading(true)
+          const response = await AcompanhamentoService.getAcompanhamentoByProcedimento(id_procedimento);            
+          setAcompanhamento(response.data)
+          if (response.data.id == ""){
+            setOpenModalAddAcompanhamento({open:true})
+          }else{
+            setOpenEditAcompanhamento({open:true})
+          }
+
+        } catch (error) {
+          setLoading(false)
+          dispatch({
+            type: 'SET_SNACKBAR',
+            payload: {
+                message: 'Erro ao buscar o acompanhamento.',
+                color: 'error'
+            },
+          })          
+        } finally {
+          setLoading(false)
+        }
+      })()
+
+    }
     const handleCloseModalAdd = () => {
       setOpenModalAdd(false)
     }
 
     const handleCloseModalEdit = () => {
       setComercial({})
-        setOpenEdit(false)
+      setOpenEdit(false)
+    }    
+
+    const handleCloseModalAddAcompanhamento = () => {
+      setOpenModalAddAcompanhamento(false)
+    }
+
+    const handleCloseModalEditAcompanhamento = () => {
+      setAcompanhamento({})
+      setOpenEditAcompanhamento(false)
     }    
  
-
   return (
       <>
         <Helmet>
@@ -122,7 +162,11 @@ const Dashboard = () => {
                 xs={12}
               >
                 {state.producao_list.length > 0 
-                  ?(<DashboardList dashboardlist={state.producao_list} openHandleEdit={handleOpenModalEdit}/>)
+                  ?(<DashboardList 
+                      dashboardlist={state.producao_list} 
+                      openHandleEdit={handleOpenModalEdit} 
+                      openHandleEditAcompanhamento={handleOpenModalEditAcompanhamento}
+                    />)
                   :null}
               </Grid>
             </Grid>
@@ -137,7 +181,13 @@ const Dashboard = () => {
                 planoContas={state.planoContas}
                 contas={state.contas}
             />
-  
+             <ModalEditAcompanhamento open={openEditAcompanhamento.open} onClose={handleCloseModalEditAcompanhamento}
+             acompanhamentoEdit={acompanhamento} procedimentos={state.procedimentos} />
+            <ModalAddAcompanhamento 
+              open={openModalAddAcompanhamento} 
+              onClose={handleCloseModalAddAcompanhamento} 
+              procedimentos={state.procedimentos}      
+            />
           </Container>
         </Box>
       </>

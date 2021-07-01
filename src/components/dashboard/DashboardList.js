@@ -13,11 +13,10 @@ import {
   TableHead,
   TableRow,
   Button,
-  Tooltip,
   TablePagination
 } from '@material-ui/core';
 
-const DashboardList = ({dashboardlist, openHandleEdit}) => {
+const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhamento}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -90,8 +89,8 @@ const DashboardList = ({dashboardlist, openHandleEdit}) => {
                       </Button>
                     </TableCell>
                     <TableCell>
-                    <Button
-                        onClick={()=>openHandleEdit(dash.id_procedimento)}
+                    <Button disabled = {dash.status_previa==" - "?false:false}
+                        onClick={()=>openHandleEditAcompanhamento(dash.id_procedimento)}
                       >
                       <Chip
                         color={dash.status_previa==" - "?"primary":"error"}
@@ -101,8 +100,8 @@ const DashboardList = ({dashboardlist, openHandleEdit}) => {
                       </Button>
                     </TableCell>
                     <TableCell>
-                    <Button
-                        onClick={()=>openHandleEdit(dash.id_procedimento)}
+                    <Button disabled = {dash.status_previa==" - "?false:false}
+                        onClick={()=>openHandleEditAcompanhamento(dash.id_procedimento)}
                       >
                       <Chip
                         color={dash.status_reembolso==" - "?"primary":"error"}

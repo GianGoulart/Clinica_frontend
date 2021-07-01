@@ -71,9 +71,15 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
         setAcompanhamento(prevState => ({
           ...prevState,
           [e.target.name]:e.target.value
-        }));console.log(acompanhamento)}
+        }));
+    }
 
-      
+    const handleOnclose = (e) =>{
+        setAcompanhamento({})
+        onClose()
+    }
+
+    
     const onSubmit = async (e) => {
         e.preventDefault();     
         try {
@@ -122,7 +128,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
     return (
         <Dialog
             open={open}
-            onClose={onClose}
+            onClose={handleOnclose}
             maxWidth="lg"
             fullWidth
         >  
