@@ -51,18 +51,6 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   Médico Principal
                 </TableCell>
                 <TableCell>
-                  Data
-                </TableCell>
-                <TableCell>
-                  Paciente
-                </TableCell>
-                <TableCell>
-                  Procedimento
-                </TableCell>
-                <TableCell>
-                  Médico Principal
-                </TableCell>
-                <TableCell>
                   Médico Participante
                 </TableCell>
                 <TableCell>
@@ -125,25 +113,13 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                     {comercial.nome_medico}
                   </TableCell>                
                   <TableCell>
-                    {comercial.procedimento.data>0?moment(comercial.procedimento.data * 1000).format("DD/MM/YYYY"):""}
-                  </TableCell>                
-                  <TableCell>
-                    {comercial.procedimento.nome_paciente}
-                  </TableCell>                
-                  <TableCell>
-                    {comercial.procedimento.nome_procedimento}
-                  </TableCell>                
-                  <TableCell>
-                    {comercial.nome_medico}
-                  </TableCell>                
-                  <TableCell>
                     {comercial.nome_medico_part}
                   </TableCell>
                   <TableCell>
                     {comercial.funcao_medico_part_desc}
                   </TableCell>
                   <TableCell>
-                    {comercial.qtd_parcelas}
+                    {comercial.qtd_parcelas}x
                   </TableCell>
                   <TableCell>
                   {comercial.valor_parcelas.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
