@@ -5,10 +5,10 @@ function setUrl(url, id = null) {
 
 	return `${url}/${id}`;
 }
-		// baseURL:"http://localhost:5055/v1/",		
 
 async function request(config) {
 	config = {
+		// baseURL:"http://localhost:5055/v1/",		
 		baseURL:"https://clinica-abrao-api-7w3sjlxr4a-uc.a.run.app/v1/", 	 	
 		method: "GET",
 		timeout: 60000,
