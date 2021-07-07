@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -13,10 +13,12 @@ import {
   IconButton
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
+import AppContext from 'src/AppContext';
 
 const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const {state, dispatch } = useContext(AppContext)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -40,9 +42,11 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                 <TableCell>
                   Especialidade
                 </TableCell>
+                {
+                  state.user.roles == 'admin' &&
                 <TableCell>
                   Ações
-                </TableCell>
+                </TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -57,6 +61,9 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                   <TableCell>
                     {medico.especialidade}
                   </TableCell>
+                  {
+                  state.user.roles == 'admin' &&
+
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(medico)}>
                       <Edit />
@@ -64,7 +71,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                     <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete( medico.id)}>
                       <Delete />
                     </IconButton>
-                  </TableCell>
+                  </TableCell>}
                 </TableRow>
               ))}
             </TableBody>

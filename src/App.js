@@ -24,6 +24,7 @@ const appContext = {
     comercial:{},
     acompanhamentos:[],
     acompanhamento:{},
+    user:{},
     tipoPagto : [
       {value: 1, label: "Reembolso"},
       {value: 2, label: "Extra"},

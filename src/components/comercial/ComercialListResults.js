@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,13 +14,12 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import moment from "moment";
-import { ProcedimentoService } from 'src/services/Services';
+import AppContext from 'src/AppContext';
 
 const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-  const [procedimento, setProcedimento] = useState()
-  const [loading, setLoading] = useState(false)
+  const {state, dispatch } = useContext(AppContext)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -89,9 +88,11 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                 <TableCell>
                   Valor Líquido
                 </TableCell>
+                {
+                  state.user.roles == 'admin' &&
                 <TableCell>
                   Ações
-                </TableCell>
+                </TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -151,7 +152,8 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   <TableCell>
                   {comercial.valor_liquido.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
                   </TableCell>
-
+                  {
+                  state.user.roles == 'admin' &&
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(comercial)}>
                       <Edit />
@@ -159,7 +161,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                     <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete(comercial.id)}>
                       <Delete />
                     </IconButton>
-                  </TableCell>
+                  </TableCell>}
                 </TableRow>
               ))}
             </TableBody>

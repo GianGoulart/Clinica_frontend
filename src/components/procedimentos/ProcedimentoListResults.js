@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,10 +14,12 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import moment from 'moment';
+import AppContext from 'src/AppContext';
 
 const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const {state, dispatch } = useContext(AppContext)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -59,9 +61,12 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                 <TableCell>
                   Esteira
                 </TableCell>
+                {
+                  state.user.roles == 'admin' &&
+
                 <TableCell>
                   Ações
-                </TableCell>
+                </TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -94,6 +99,9 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                   <TableCell>
                     {procedimento.desc_esteira}
                   </TableCell>
+                  {
+                  state.user.roles == 'admin' &&
+
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(procedimento)}>
                       <Edit />
@@ -101,7 +109,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                     <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete( procedimento.id)}>
                       <Delete />
                     </IconButton>
-                  </TableCell>
+                  </TableCell>}
                 </TableRow>
               ))}
             </TableBody>

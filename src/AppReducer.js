@@ -55,6 +55,11 @@ const AppReducer = (state, action) => {
                 ...state,
                 acompanhamento: action.payload,
         }
+        case "SET_USER":
+            return {
+                ...state,
+                user: action.payload,
+        }
         case "SET_SNACKBAR":
             return {
                 ...state,

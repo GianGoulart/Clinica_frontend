@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,10 +14,12 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import moment from "moment";
+import AppContext from 'src/AppContext';
 
 const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const {state, dispatch } = useContext(AppContext)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -62,9 +64,11 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
                 <TableCell>
                   Repasse Clinica
                 </TableCell>
+                {
+                  state.user.roles == 'admin' &&
                 <TableCell>
                   Ações
-                </TableCell>
+                </TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -100,6 +104,8 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
                   <TableCell>
                     {acompanhamento.repasse_clinica>0?moment(acompanhamento.repasse_clinica * 1000).format("DD/MM/YYYY"):""}
                   </TableCell>
+                  {
+                  state.user.roles == 'admin' &&
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(acompanhamento)}>
                       <Edit />
@@ -107,7 +113,7 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
                     <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete(acompanhamento.id)}>
                       <Delete />
                     </IconButton>
-                  </TableCell>
+                  </TableCell>}
                 </TableRow>
               ))}
             </TableBody>

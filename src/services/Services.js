@@ -5,7 +5,7 @@ import ComercialService from './comercial/ComercialService';
 import AcompanhamentoService from './acompanhamento/AcompanhamentoService';
 import DashboardService from './dashboard/DashboardService';
 import RequestService from './RequestService';
-
+import LoginService from './login/LoginService';
 export {
     RequestService,
     PacienteService,
@@ -13,5 +13,6 @@ export {
     ProcedimentoService,
     ComercialService,
     AcompanhamentoService,
-    DashboardService
+    DashboardService,
+    LoginService
 }

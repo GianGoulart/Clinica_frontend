@@ -107,13 +107,15 @@ const ProcedimentoListToolbar = ({props, pacientes, medicos}) => {
         justifyContent: 'flex-end'
       }}
     >
+       {
+      state.user.roles == 'admin' &&
       <Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
       >
         Add Procedimento
-      </Button>
+      </Button>}
     </Box>
     <Grid item xs={12}>
       <Paper >

@@ -106,13 +106,14 @@ const PacienteListToolbar = (props) => {
         justifyContent: 'flex-end'
       }}
     >
-      <Button
+       {
+      state.user.roles == 'admin' &&<Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
       >
         Add Paciente
-      </Button>
+      </Button>}
     </Box>
     <Grid item xs={12}>
         <Paper >
@@ -155,6 +156,7 @@ const PacienteListToolbar = (props) => {
           </Box>
         </Paper>
       </Grid>
+    
     <ModalAddPaciente 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 

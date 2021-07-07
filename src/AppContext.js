@@ -15,6 +15,7 @@ const AppContext = React.createContext({
     acompanhamentos:[],
     snackBar: {},
     acompanhamento:{},
+    user:{},
     tipoPagto : [
         {value: 1, label: "Reembolso"},
         {value: 2, label: "Extra"},

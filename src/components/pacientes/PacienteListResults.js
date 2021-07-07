@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -15,17 +15,18 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import getInitials from 'src/utils/getInitials';
+import AppContext from 'src/AppContext';
 
 const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const { state, dispatch } = useContext(AppContext)
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
 
   const handlePageChange = (event, newPage) => {
-    console.log(newPage)
     setPage(newPage);
   };
 
@@ -61,9 +62,13 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                 <TableCell>
                   Telefone 2
                 </TableCell>
-                <TableCell>
+                {
+                  state.user.roles == 'admin' &&
+                  <TableCell>
                   Ações
-                </TableCell>
+                </TableCell> 
+                }
+                
               </TableRow>
             </TableHead>
             <TableBody>
@@ -108,6 +113,8 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                   <TableCell>
                     {paciente.telefone2}
                   </TableCell>
+                  {
+                  state.user.roles == 'admin' &&
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(paciente)}>
                       <Edit />
@@ -115,7 +122,7 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                     <IconButton aria-label="delete" color="secondary" onClick={() => openHandleDelete( paciente.id)}>
                       <Delete />
                     </IconButton>
-                  </TableCell>
+                  </TableCell>}
                 </TableRow>
               ))}
             </TableBody>

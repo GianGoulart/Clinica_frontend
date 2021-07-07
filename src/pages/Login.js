@@ -1,4 +1,4 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom'; 
 import { Helmet } from 'react-helmet';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -14,6 +14,9 @@ import {
   Typography
 } from '@material-ui/core';
 import {makeStyles, useTheme } from '@material-ui/core/styles';
+import { useContext, useState } from 'react';
+import AppContext from 'src/AppContext';
+import { LoginService } from 'src/services/Services';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +38,44 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
   const navigate = useNavigate();
   const classes = useStyles();
+  const { state, dispatch } = useContext(AppContext)
   const theme = useTheme();
+  const [user, setUser] = useState({})
+  const [erro, setErro] = useState({})
+  const [loading, setLoading] = useState(false)
+
+  const getLogin = (userLogin) =>{
+    (async () => {
+      try {
+        setLoading(true)
+        const response = await LoginService.getLogin(userLogin);     
+
+        dispatch({
+          type: 'SET_USER',
+          payload: response.data
+        })
+
+        if (response.data != null){
+          navigate("/app/dashboard")
+        }
+      } catch (error) {
+        setLoading(false)
+        dispatch({
+          type: 'SET_SNACKBAR',
+          payload: {
+              message: 'Usuário ou senha incorreto.',
+              color: 'red'
+          },
+        })
+        return
+      } finally {
+        setLoading(false)
+        
+      }
+    })()
+
+  }
+
   return (
     <>
       <Helmet>
@@ -60,15 +100,15 @@ const Login = () => {
             />
             <Formik
               initialValues={{
-                email: '',
-                password: ''
+                  nome: '',
+                  senha: ''
               }}
               validationSchema={Yup.object().shape({
-                email: Yup.string().email('Email inválido').max(255).required('Email é obrigatório'),
-                password: Yup.string().max(255).required('Senha é obrigatório')
+                nome: Yup.string().max(255).required('Usuário é obrigatório'),
+                senha: Yup.string().max(255).required('Senha é obrigatório')
               })}
-              onSubmit={() => {
-                navigate('/app/dashboard', { replace: true });
+              onSubmit={(user) => {
+                getLogin(user)
               }}
             >
               {({
@@ -83,16 +123,16 @@ const Login = () => {
                 <form onSubmit={handleSubmit}>
 
                   <TextField
-                    error={Boolean(touched.email && errors.email)}
+                    error={Boolean(touched.user && errors.email)}
                     fullWidth
-                    helperText={touched.email && errors.email}
-                    label="Email"
+                    helperText={touched.user && errors.email}
+                    label="Usuário"
                     margin="normal"
-                    name="email"
+                    name="nome"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    type="email"
-                    value={values.email}
+                    type="text"
+                    value={values.nome}
                     variant="outlined"
                   />
                   <TextField
@@ -101,17 +141,17 @@ const Login = () => {
                     helperText={touched.password && errors.password}
                     label="Senha"
                     margin="normal"
-                    name="password"
+                    name="senha"
                     onBlur={handleBlur}
                     onChange={handleChange}
                     type="password"
-                    value={values.password}
+                    value={values.senha}
                     variant="outlined"
                   />
                   <Box sx={{ py: 2 }}>
                     <Button
                       color="primary"
-                      disabled={isSubmitting}
+                      disabled={loading}
                       fullWidth
                       size="large"
                       type="submit"

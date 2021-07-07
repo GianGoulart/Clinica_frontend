@@ -93,13 +93,14 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
         justifyContent: 'flex-end'
       }}
     >
-      <Button
+       {
+      state.user.roles == 'admin' &&<Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
       >
         Add Comercial
-      </Button>
+      </Button>}
     </Box>
     <Grid item xs={12}>
       <Paper >
@@ -175,7 +176,7 @@ const ComercialListToolbar = ({props, procedimentos, medicos}) => {
         </Box>
       </Paper>
     </Grid>
-
+   
     <ModalAddComercial 
       open={openModalAdd} 
       onClose={handleCloseModalAdd} 

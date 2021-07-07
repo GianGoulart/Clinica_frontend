@@ -95,13 +95,14 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
         justifyContent: 'flex-end'
       }}
     >
-      <Button
+     {
+      state.user.roles == 'admin' &&  <Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
       >
         Add Acompanhamento
-      </Button>
+      </Button>}
     </Box>
     <Grid item xs={12}>
       <Paper >

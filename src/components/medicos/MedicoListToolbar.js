@@ -97,13 +97,14 @@ const MedicoListToolbar = (props) => {
         justifyContent: 'flex-end'
       }}
     >
-      <Button
+      {
+      state.user.roles == 'admin' && <Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
       >
         Add Médico
-      </Button>
+      </Button>}
     </Box>
     <Grid item xs={12}>
         <Paper >
