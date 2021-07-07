@@ -15,7 +15,7 @@ async function request(config) {
 		...config,
 		headers: {
 			"access-control-allow-origin" : "*",
-			"Content-type": "application/json; charset=UTF-8",
+			"Content-type": "application/json",
 			...config.headers,
 		},
 	};
