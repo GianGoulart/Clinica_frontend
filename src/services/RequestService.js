@@ -14,8 +14,7 @@ async function request(config) {
 		timeout: 60000,
 		...config,
 		headers: {
-			"access-control-allow-origin" : "*",
-			"Content-type": "application/json",
+			"Content-Type": "application/json",
 			...config.headers,
 		},
 	};
