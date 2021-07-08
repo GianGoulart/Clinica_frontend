@@ -370,7 +370,7 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                                 <Grid item xs={3} className={classes.field}>
                                     <Input type={"date"} name={"data_emissao_nf"}
                                         onChange={e => onChange(e)}
-                                        label={"Data Emissao NF"} placeholder={'Data Emissão NF'}
+                                        label={"Data Emissao NF"}
                                         value={comercial.data_emissao_nf>0?moment(comercial.data_emissao_nf * 1000).format("YYYY-MM-DD"):""}
 
                                     />
@@ -379,21 +379,21 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                                     <Input type={"date"} name={"data_vencimento"}
                                         onChange={e => onChange(e)}
                                         value={comercial.data_vencimento>0?moment(comercial.data_vencimento * 1000).format("YYYY-MM-DD"):""}
-                                        label={"Data Vencimento"} placeholder={'Data Vencimento'}
+                                        label={"Data Vencimento"}
                                     />
                                 </Grid>
                                 <Grid item xs={3} className={classes.field}>
                                     <Input type={"date"} name={"data_pagamento"}
                                         onChange={e => onChange(e)}
                                         value={comercial.data_pagamento>0?moment(comercial.data_pagamento * 1000).format("YYYY-MM-DD"):""}
-                                        label={"Data Pagamento"} placeholder={'Data Pagamento'}
+                                        label={"Data Pagamento"}
                                     />
                                 </Grid>
                                 <Grid item xs={3} className={classes.field}>
                                     <Input type={"date"} name={"data_compensacao"}
                                         onChange={e => onChange(e)}
                                         value={comercial.data_compensacao>0?moment(comercial.data_compensacao * 1000).format("YYYY-MM-DD"):""}
-                                        label={"Data Compensação"} placeholder={'Data Compensação'}
+                                        label={"Data Compensação"} 
                                     />
                                 </Grid>
 
