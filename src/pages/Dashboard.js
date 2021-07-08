@@ -49,13 +49,13 @@ const Dashboard = () => {
 
 
       } catch (error) {
-        console.log(error)
+
         setLoading(false)
         dispatch({
           type: 'SET_SNACKBAR',
           payload: {
               message: 'Erro ao buscar os médicos cadastradas.',
-              color: 'error'
+              color: 'red'
           },
         })          
       } finally {

@@ -18,7 +18,6 @@ import {
     FormControl,
     FormHelperText
 } from "@material-ui/core";
-import CurrencyFormat from 'react-currency-format';
 import { ProcedimentoService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddProcedimentoStyle from "./ModalAddProcedimentoStyle"
@@ -26,7 +25,7 @@ import MaskedInput from "react-input-mask";
 import { useForm } from "react-hook-form";
 import moment from "moment";
 import Snackbar from "../snackbar/Snackbar";
-
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -118,6 +117,18 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
         e.preventDefault();     
         try {
 
+            if (parseInt(procedimento.status) == 1 || parseInt(procedimento.status) == 2 && moment(procedimento.data).utc().unix() < moment().utc().unix()) {
+                dispatch({
+                    type: 'SET_SNACKBAR',
+                    payload: {
+                        message: 'ERRO: Status Agendar/Agendado com uma data Anterior.',
+                        color: 'red',
+                    },
+                })
+    
+                return
+            } 
+
             if (parseInt(procedimento.status) == 3 && moment(procedimento.data).utc().unix() > moment().utc().unix()) {
                 dispatch({
                     type: 'SET_SNACKBAR',
@@ -136,7 +147,11 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
             procedimento.esteira = parseInt(procedimento.esteira)
             procedimento.status = parseInt(procedimento.status)
             procedimento.local_procedimento = parseInt(procedimento.local_procedimento)
-            procedimento.valor = parseFloat(procedimento.valor)
+
+            var cur_re = /\D*(\d+|\d.*?\d)(?:\D+(\d{2}))?\D*$/;
+            var parts = cur_re.exec(procedimento.valor);
+            procedimento.valor = parseFloat(parts[1].replace(/\D/,'')+'.'+(parts[2]?parts[2]:'00'));
+
             const response = await ProcedimentoService.saveProcedimento(procedimento)
             dispatch({
                 type: 'SET_SNACKBAR',
@@ -300,41 +315,30 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                 >
                                     <Grid item xs={2} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field} required>
-                                            <CurrencyFormat 
-                                                customInput={Input}
-                                                prefix={"R$"}
-                                                decimalScale={2}
-                                                thousandSeparator={","}
-                                                decimalSeparator={"."}
-                                                thousandSpacing={'3'}
-                                                allowNegative ={false}
-                                                value={procedimento.valor}                                                
-                                                onValueChange={(values) => { const {formattedValue, value} = values;
-                                                setProcedimento(prevState => ({
-                                                    ...prevState,
-                                                    "valor": value
-                                                }))}}
-                                            />
+                                            <FormHelperText id="my-helper-text">Valor</FormHelperText>
+                                            <CurrencyInput placeholder="R$0,00" onChange={(e)=>handleOnchage(e)} type="text" name={"valor"} value={procedimento.valor}/>
                                         </FormControl>
                                         <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
-                                        <TextField
-                                            onChange={e => handleOnchage(e)}                                
-                                            fullWidth
-                                            id="date"
-                                            label="Data"
-                                            name="data"
-                                            type="date"
-                                            className={classes.textField}
-                                                InputLabelProps={{
-                                            shrink: true,
-                                            }}
-                                        />
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
+                                            <FormHelperText id="my-helper-text">Data </FormHelperText>
+                                            <TextField
+                                                onChange={e => handleOnchage(e)}                                
+                                                fullWidth
+                                                id="date"
+                                                name="data"
+                                                type="date"
+                                                className={classes.textField}
+                                                    InputLabelProps={{
+                                                shrink: true,
+                                                }}
+                                            />
+                                        </FormControl>
                                     </Grid>                                 
                                     <Grid item xs={3}  className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field} required>
-                                            <InputLabel htmlFor="outlined-age-native-simple">Esteira</InputLabel>
+                                            <FormHelperText id="my-helper-text">Esteira</FormHelperText>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
                                                 native
@@ -354,7 +358,7 @@ const ModalAddProcedimento = ({ open, onClose,  pacientes, medicos, procedimento
                                     </Grid>  
                                     <Grid item xs={3}  className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field} required>
-                                            <InputLabel htmlFor="outlined-age-native-simple">Status</InputLabel>
+                                            <FormHelperText id="my-helper-text">Status</FormHelperText>
                                             <Select
                                                 onChange={e => handleOnchage(e)}                                
                                                 native

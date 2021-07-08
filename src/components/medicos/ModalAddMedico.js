@@ -51,7 +51,6 @@ const ModalAddMedico = ({ classes, open, onClose, medicoProps}) => {
         e.preventDefault();     
         try {
             setLoading(true)
-            console.log(medico)
             const response = await MedicoService.saveMedico(medico)
             dispatch({
                 type: 'SET_SNACKBAR',

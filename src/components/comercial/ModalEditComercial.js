@@ -17,12 +17,14 @@ import {
     FormControl,
     FormHelperText
 } from "@material-ui/core";
-import CurrencyFormat from 'react-currency-format';
 import { ComercialService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddComercialStyle from "./ModalAddComercialStyle"
 import { useForm } from "react-hook-form";
 import moment from "moment";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
+import formatMoney from 'accounting-js/lib/formatMoney.js'
+import unformat from 'accounting-js/lib/unformat.js'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -113,6 +115,9 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
     const classes = useStyles()
 
     useEffect(() => {
+        comercialEdit.valor_parcelas = formatMoney(comercialEdit.valor_parcelas, { symbol: "R$", precision: 2, thousand: ".", decimal: "," })
+        comercialEdit.valor_ajuste = formatMoney(comercialEdit.valor_ajuste, { symbol: "R$", precision: 2, thousand: ".", decimal: "," })
+
         setComercial(comercialEdit)
 
         if (comercialEdit.id_procedimento != undefined && comercialEdit.id_procedimento != "" && comercialEdit.id_procedimento != null) {
@@ -153,15 +158,14 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
             comercial.tipo_pagamento = parseInt(comercial.tipo_pagamento)
             comercial.forma_pagamento = parseInt(comercial.forma_pagamento)
             comercial.qtd_parcelas = parseInt(comercial.qtd_parcelas)
-            comercial.valor_parcelas = parseFloat(comercial.valor_parcelas)
             comercial.data_pagamento = new Date(comercial.data_pagamento).getTime()
             comercial.data_compensacao = new Date(comercial.data_compensacao).getTime()
             comercial.conta = comercial.conta != null ? parseInt(comercial.conta) : 0
             comercial.plano_contas = comercial.plano_contas != null ? parseInt(comercial.plano_contas) : 0
-            comercial.valor_ajuste = parseFloat(comercial.valor_ajuste)
-            comercial.valor_liquido = parseFloat(comercial.valor_liquido)
 
-            console.log(comercial)
+            comercial.valor_ajuste = unformat(comercial.valor_ajuste,",")
+            comercial.valor_parcelas = unformat(comercial.valor_parcelas,",")
+
             const response = await ComercialService.updateComercial(comercial)
             dispatch({
                 type: 'SET_SNACKBAR',
@@ -423,46 +427,13 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                                 <Grid item xs={3} className={classes.field}>
                                     <FormControl fullWidth variant="outlined" className={classes.field}>
                                         <FormHelperText id="my-helper-text">Valor Parcela</FormHelperText>
-                                        <CurrencyFormat
-                                            customInput={Input}
-                                            prefix={"R$"}
-                                            decimalScale={2}
-                                            thousandSeparator={","}
-                                            decimalSeparator={"."}
-                                            thousandSpacing={'3'}
-                                            allowNegative={false}
-                                            value={comercial.valor_parcelas}
-                                            onValueChange={(values) => {
-                                                const { formattedValue, value } = values;
-                                                setComercial(prevState => ({
-                                                    ...prevState,
-                                                    "valor_parcelas": value
-                                                }))
-                                            }}
-                                        />
-
+                                        <CurrencyInput placeholder="R$0,00" onChange={(e)=>onChange(e)} type="text" name={"valor_parcelas"} value={comercial.valor_parcelas}/>
                                     </FormControl>
                                 </Grid>
-                                <Grid item xs={3} className={classes.field}>
+                                 <Grid item xs={3} className={classes.field}>
                                     <FormControl fullWidth variant="outlined" className={classes.field}>
                                         <FormHelperText id="my-helper-text">Valor Ajuste</FormHelperText>
-                                        <CurrencyFormat
-                                            customInput={Input}
-                                            prefix={"R$"}
-                                            decimalScale={2}
-                                            thousandSeparator={","}
-                                            decimalSeparator={"."}
-                                            thousandSpacing={'3'}
-                                            allowNegative={false}
-                                            value={comercial.valor_ajuste}
-                                            onValueChange={(values) => {
-                                                const { formattedValue, value } = values;
-                                                setComercial(prevState => ({
-                                                    ...prevState,
-                                                    "valor_ajuste": value
-                                                }))
-                                            }}
-                                        />
+                                        <CurrencyInput placeholder="R$0,00" onChange={(e)=>onChange(e)} type="text" name={"valor_ajuste"} value={comercial.valor_ajuste}/>
                                     </FormControl>
                                 </Grid>
                             </Box>

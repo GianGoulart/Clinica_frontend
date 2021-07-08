@@ -61,7 +61,7 @@ const Snackbar = ({
                         className={classes.closeIconButton}
                         size='small'
                         onClick={handleClose}
-                    >{console.log(color)}
+                    >
                         <Close fontSize='small' />
                     </IconButton>
                 }

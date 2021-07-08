@@ -104,16 +104,6 @@ const ModalEditPaciente = ({ classes, open, onClose, onChange, paciente}) => {
                                 <Input label={"CPF"} placeholder={'Digite o CPF do Paciente'}/>
                             </MaskedInput>
                             <MaskedInput
-                                value={paciente.plano}
-                                name="plano"
-                                mask=""
-                                alwaysShowMask
-                                onChange={e => onChange(e)}
-                                maskChar={null}
-                            >   
-                                <Input label={"Plano"} placeholder={'Qual plano do Paciente'}/>
-                            </MaskedInput>
-                            <MaskedInput
                                 value={paciente.convenio}
                                 name="convenio"
                                 mask=""
@@ -122,6 +112,16 @@ const ModalEditPaciente = ({ classes, open, onClose, onChange, paciente}) => {
                                 maskChar={null}
                             >   
                                 <Input label={"Convênio"} placeholder={'Digite o Convenio do Paciente'}/>
+                            </MaskedInput>
+                            <MaskedInput
+                                value={paciente.plano}
+                                name="plano"
+                                mask=""
+                                alwaysShowMask
+                                onChange={e => onChange(e)}
+                                maskChar={null}
+                            >   
+                                <Input label={"Plano"} placeholder={'Qual plano do Paciente'}/>
                             </MaskedInput>
                             <MaskedInput
                                 value={paciente.acomodacao}

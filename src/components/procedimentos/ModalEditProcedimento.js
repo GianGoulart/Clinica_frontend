@@ -15,16 +15,18 @@ import {
     InputLabel,
     Box,
     makeStyles,
-    FormControl
+    FormControl,
+    FormHelperText
 
 } from "@material-ui/core";
-import CurrencyFormat from 'react-currency-format';
+import formatMoney from 'accounting-js/lib/formatMoney.js'
 import { ProcedimentoService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddProcedimentoStyle from "./ModalAddProcedimentoStyle"
 import MaskedInput from "react-input-mask";
 import { useForm } from "react-hook-form";
 import moment from 'moment';
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -104,6 +106,7 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
     const [procedimento, setProcedimento] = useState({procedimentoEdit})
 
     useEffect(()=>{
+        procedimentoEdit.valor = formatMoney(procedimentoEdit.valor, { symbol: "R$", precision: 2, thousand: ".", decimal: "," })
         setProcedimento(procedimentoEdit)
     },[procedimentoEdit])
 
@@ -126,7 +129,11 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
                 procedimento.esteira = parseInt(procedimento.esteira)
                 procedimento.status = parseInt(procedimento.status)
                 procedimento.local_procedimento = parseInt(procedimento.local_procedimento)
-                procedimento.valor = parseFloat(procedimento.valor)
+
+                var cur_re = /\D*(\d+|\d.*?\d)(?:\D+(\d{2}))?\D*$/;
+                var parts = cur_re.exec(procedimento.valor);
+                procedimento.valor = parseFloat(parts[1].replace(/\D/,'')+'.'+(parts[2]?parts[2]:'00'));
+                
                 const response = await ProcedimentoService.updateProcedimento(procedimento)
                 dispatch({
                     type: 'SET_SNACKBAR',
@@ -162,7 +169,7 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
             maxWidth="lg"
             fullWidth
         >  
-            {console.log(procedimento)}<DialogTitle className={classes.dialogTitle}>Alterar Procedimento</DialogTitle>               
+            <DialogTitle className={classes.dialogTitle}>Alterar Procedimento</DialogTitle>               
                 <form className={classes.form} noValidate onSubmit={(e)=>handleSubmit(onSubmit(e))}>
                 <DialogContent className={classes.dialogContent}>
                         <Grid item xs={12}>
@@ -277,32 +284,19 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
                                 }}
                                 >
                                     <Grid item xs={2} className={classes.field}>
-                                        <FormControl fullWidth variant="outlined" className={classes.field}>
-                                            <CurrencyFormat 
-                                                customInput={Input}
-                                                prefix={"R$"}
-                                                decimalScale={2}
-                                                thousandSeparator={","}
-                                                decimalSeparator={"."}
-                                                thousandSpacing={'3'}
-                                                allowNegative ={false}
-                                                value={procedimento.valor}                                                
-                                                onValueChange={(values) => { const {formattedValue, value} = values;
-                                                    setProcedimento(prevState => ({
-                                                        ...prevState,
-                                                        "valor": value
-                                                    }))
-                                                }}
-                                            />
+                                        <FormControl fullWidth variant="outlined" className={classes.field} required>
+                                            <FormHelperText id="my-helper-text">Valor</FormHelperText>
+                                            <CurrencyInput placeholder="R$0,00" onChange={(e)=>onChange(e)} type="text" name={"valor"} value={procedimento.valor}/>
                                         </FormControl>
+                                        <FormHelperText id="my-helper-text">*Obrigatório</FormHelperText>
 
                                     </Grid>                            
                                     <Grid item xs={2} className={classes.field}>
+                                        <FormHelperText id="my-helper-text">Data </FormHelperText>
                                         <TextField
                                             onChange={e => onChange(e)}
                                             fullWidth
                                             id="date"
-                                            label="Data"
                                             name="data"
                                             type="date"
                                             value={moment(procedimento.data * 1000).format("YYYY-MM-DD")}
@@ -314,12 +308,11 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
                                     </Grid>                                 
                                     <Grid item xs={3}  className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
-                                            <InputLabel htmlFor="outlined-age-native-simple">Esteira</InputLabel>
+                                            <FormHelperText id="my-helper-text">Esteira </FormHelperText>
                                             <Select
                                                 onChange={e => onChange(e)}
                                                 native
                                                 value={procedimento.esteira}
-                                                label="Esteira"
                                                 name="esteira"
                                             >
                                                 <option aria-label="Selecione" value="" />
@@ -333,12 +326,11 @@ const ModalEditProcedimento = ({ open, onClose , procedimentoEdit, pacientes, me
                                     </Grid>  
                                     <Grid item xs={3}  className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field}>
-                                            <InputLabel htmlFor="outlined-age-native-simple">Status</InputLabel>
+                                            <FormHelperText id="my-helper-text">Status </FormHelperText>
                                             <Select
                                                 onChange={e => onChange(e)}
                                                 native
                                                 value={procedimento.status}
-                                                label="Status"
                                                 name="status"
                                             >
                                                 <option aria-label="Selecione" value="" />

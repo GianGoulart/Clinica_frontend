@@ -48,7 +48,6 @@ function updateAcompanhamento(values) {
 }
 
 function delAcompanhamento(id) {
-    console.log(`${PATH}/${id}`)
     return new Promise((resolve, reject) =>
         RequestService
             .delete(`${PATH}/${id}`,null, null, null)

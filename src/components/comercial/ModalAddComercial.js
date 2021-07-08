@@ -15,16 +15,14 @@ import {
     Box,
     makeStyles,
     FormControl,
-    FormHelperText,
-    FormControlLabel
-} from "@material-ui/core";
-import CurrencyFormat from 'react-currency-format';
+    FormHelperText} from "@material-ui/core";
+import CurrencyInput from "../CurrencyInput/CurrencyInput";
 import { ComercialService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddComercialStyle from "./ModalAddComercialStyle"
 import { useForm } from "react-hook-form";
 import moment from "moment";
-import NumberFormat from 'react-number-format';
+import unformat from 'accounting-js/lib/unformat.js'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -71,8 +69,8 @@ const funcoes = [
 
 const Input = props => {
     const { name, label, placeholder, type,inputRef, value, maskChar, ...inputProps } = props;
-    console.log(props)
     return  <TextField
+                
                 {...inputProps}
                 ref={inputRef}
                 label={label===undefined?"":label}
@@ -129,14 +127,14 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, planoContas,
             comercial.tipo_pagamento = parseInt(comercial.tipo_pagamento)
             comercial.forma_pagamento = parseInt(comercial.forma_pagamento)
             comercial.qtd_parcelas = parseInt(comercial.qtd_parcelas)
-            comercial.valor_parcelas = parseFloat(comercial.valor_parcelas)
             
             comercial.data_pagamento = comercial.data_pagamento != "" && comercial.data_pagamento != null ? moment(comercial.data_pagamento).utc().unix() : 0
             comercial.data_compensacao = comercial.data_compensacao != "" && comercial.data_compensacao != null ? moment(comercial.data_compensacao).utc().unix() : 0
             comercial.conta = comercial.conta != null ? parseInt(comercial.conta) : 0
             comercial.plano_contas = comercial.plano_contas != null ? parseInt(comercial.plano_contas) : 0
-            comercial.valor_ajuste = parseFloat(comercial.valor_ajuste)
-            comercial.valor_liquido = parseFloat(comercial.valor_liquido)
+
+            comercial.valor_ajuste = unformat(comercial.valor_ajuste,",")
+            comercial.valor_parcelas = unformat(comercial.valor_parcelas,",")
 
             const response = await ComercialService.saveComercial(comercial)
             dispatch({
@@ -431,6 +429,7 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, planoContas,
                                         <FormHelperText id="my-helper-text">Qtd de Parcelas </FormHelperText>
                                             <Input type={"number"} name={"qtd_parcelas"} value={comercial.qtd_parcelas} 
                                                 placeholder={'Qtde Parcelas'}
+                                                InputProps={{ inputProps: { min: 0, max: 100 } }}
                                                 onChange={e => handleOnchange(e)} 
                                             />
                                         </FormControl>
@@ -438,43 +437,13 @@ const ModalAddComercial = ({ open, onClose, medicos, procedimentos, planoContas,
                                     <Grid item xs={3} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <FormHelperText id="my-helper-text">Valor Parcela</FormHelperText>
-                                            <CurrencyFormat 
-                                                customInput={Input}
-                                                prefix={"R$"}
-                                                decimalScale={2}
-                                                thousandSeparator={","}
-                                                decimalSeparator={"."}
-                                                thousandSpacing={'3'}
-                                                allowNegative ={false}
-                                                value={comercial.valor_parcela}                                                
-                                                onValueChange={(values) => { const {formattedValue, value} = values;
-                                                    setComercial(prevState => ({
-                                                    ...prevState,
-                                                    "valor_parcela": value
-                                                    }))}
-                                                }
-                                            />
+                                            <CurrencyInput placeholder="R$0,00" onChange={(e)=>handleOnchange(e)} type="text" name={"valor_parcelas"} value={comercial.valor_parcelas}/>
                                         </FormControl>
                                     </Grid>                                             
                                     <Grid item xs={3} className={classes.field}>
                                         <FormControl fullWidth variant="outlined" className={classes.field} required>
                                             <FormHelperText id="my-helper-text">Valor Ajuste</FormHelperText>
-                                            <CurrencyFormat 
-                                                customInput={Input}
-                                                prefix={"R$"}
-                                                decimalScale={2}
-                                                thousandSeparator={","}
-                                                decimalSeparator={"."}
-                                                thousandSpacing={'3'}
-                                                allowNegative ={false}
-                                                value={comercial.valor_ajuste}                                                
-                                                onValueChange={(values) => { const {formattedValue, value} = values;
-                                                    setComercial(prevState => ({
-                                                    ...prevState,
-                                                    "valor_ajuste": value
-                                                    }))}
-                                                }
-                                            />
+                                            <CurrencyInput placeholder="R$0,00" onChange={(e)=>handleOnchange(e)} type="text" name={"valor_ajuste"} value={comercial.valor_ajuste}/>
                                         </FormControl>
                                     </Grid>                            
                                 </Box>

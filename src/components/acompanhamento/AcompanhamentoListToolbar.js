@@ -66,7 +66,6 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
     try {
       setLoading(true)
       const response = await AcompanhamentoService.getAcompanhamentoByAnything(acompanhamento)
-      console.log(response)
       dispatch({
         type: 'SET_ACOMPANHAMENTOS',
         payload: response.data == null?{}:response.data,

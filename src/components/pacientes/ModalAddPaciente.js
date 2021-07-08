@@ -111,19 +111,6 @@ const ModalAddPaciente = ({ classes, open, onClose, edit, pacienteProps }) => {
                                     <Input label={"CPF"} placeholder={'Digite o CPF do Paciente'}/>
                                 </MaskedInput>
                                 <MaskedInput
-                                    value={paciente.plano}
-                                    name="plano"
-                                    mask=""
-                                    alwaysShowMask
-                                    onChange={e => setPaciente(prevState => ({
-                                        ...prevState,
-                                        [e.target.name]: e.target.value
-                                    }))}
-                                    maskChar={null}
-                                >   
-                                    <Input label={"Plano"} placeholder={'Qual plano do Paciente'}/>
-                                </MaskedInput>
-                                <MaskedInput
                                     value={paciente.convenio}
                                     name="convenio"
                                     mask=""
@@ -135,6 +122,19 @@ const ModalAddPaciente = ({ classes, open, onClose, edit, pacienteProps }) => {
                                     maskChar={null}
                                 >   
                                     <Input label={"Convênio"} placeholder={'Digite o Convenio do Paciente'}/>
+                                </MaskedInput>
+                                <MaskedInput
+                                    value={paciente.plano}
+                                    name="plano"
+                                    mask=""
+                                    alwaysShowMask
+                                    onChange={e => setPaciente(prevState => ({
+                                        ...prevState,
+                                        [e.target.name]: e.target.value
+                                    }))}
+                                    maskChar={null}
+                                >   
+                                    <Input label={"Plano"} placeholder={'Qual plano do Paciente'}/>
                                 </MaskedInput>
                                 <MaskedInput
                                     value={paciente.acomodacao}
