@@ -25,7 +25,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
     setLimit(event.target.value);
   };
 
-  const handlePageChange = ( newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 

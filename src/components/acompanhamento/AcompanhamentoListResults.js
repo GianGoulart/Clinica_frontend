@@ -25,7 +25,7 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
     setLimit(event.target.value);
   };
 
-  const handlePageChange = ( newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 

@@ -72,6 +72,7 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
               </TableRow>
             </TableHead>
             <TableBody>
+
               {pacientes.slice(limit*page, limit*(page+1)).map((paciente) => (
                 <TableRow
                   hover

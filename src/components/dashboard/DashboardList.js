@@ -24,7 +24,7 @@ const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhame
     setLimit(event.target.value);
   };
 
-  const handlePageChange = ( newPage) => {
+  const handlePageChange = (event,newPage) => {
     setPage(newPage);
   };
 

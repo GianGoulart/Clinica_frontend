@@ -25,7 +25,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
     setLimit(event.target.value);
   };
 
-  const handlePageChange = ( newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 

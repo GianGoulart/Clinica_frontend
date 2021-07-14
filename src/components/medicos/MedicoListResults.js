@@ -24,7 +24,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
     setLimit(event.target.value);
   };
 
-  const handlePageChange = ( newPage) => {
+  const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
 
