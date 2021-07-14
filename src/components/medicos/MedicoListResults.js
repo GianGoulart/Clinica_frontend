@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -19,6 +19,12 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const {state, dispatch } = useContext(AppContext)
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -43,7 +49,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                   Especialidade
                 </TableCell>
                 {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
                 <TableCell>
                   Ações
                 </TableCell>}
@@ -62,7 +68,7 @@ const MedicoListResults = ({ medicos, openHandleEdit, openHandleDelete}) => {
                     {medico.especialidade}
                   </TableCell>
                   {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
 
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(medico)}>

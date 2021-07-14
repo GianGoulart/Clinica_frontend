@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {
   Box,
@@ -41,7 +41,13 @@ const PacienteListToolbar = (props) => {
       cpf:"",
       convenio:""
   })
-  
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
+
   const classes = useStyles();
   
   const searches = [
@@ -107,7 +113,7 @@ const PacienteListToolbar = (props) => {
       }}
     >
        {
-      state.user.roles == 'admin' &&<Button
+      user.roles == 'admin' &&<Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}

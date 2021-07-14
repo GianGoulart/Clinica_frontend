@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -20,7 +20,12 @@ import AppContext from 'src/AppContext';
 const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
-  const { state, dispatch } = useContext(AppContext)
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -63,7 +68,7 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                   Telefone 2
                 </TableCell>
                 {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
                   <TableCell>
                   Ações
                 </TableCell> 
@@ -115,7 +120,7 @@ const PacienteListResults = ({  pacientes, openHandleEdit, openHandleDelete }) =
                     {paciente.telefone2}
                   </TableCell>
                   {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(paciente)}>
                       <Edit />

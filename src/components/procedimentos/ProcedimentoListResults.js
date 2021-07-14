@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -14,12 +14,16 @@ import {
 } from '@material-ui/core';
 import {Delete, Edit} from '@material-ui/icons';
 import moment from 'moment';
-import AppContext from 'src/AppContext';
 
 const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDelete}) => {
   const [limit, setLimit] = useState(10);
-  const [page, setPage] = useState(0);
-  const {state, dispatch } = useContext(AppContext)
+  const [page, setPage] = useState(0);  
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -62,7 +66,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                   Esteira
                 </TableCell>
                 {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
 
                 <TableCell>
                   Ações
@@ -100,7 +104,7 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
                     {procedimento.desc_esteira}
                   </TableCell>
                   {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
 
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(procedimento)}>

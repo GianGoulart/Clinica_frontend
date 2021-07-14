@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {
   Box,
@@ -46,6 +46,12 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
   const [loading, setLoading] = useState(false)
   const [acompanhamento, setAcompanhamento] = useState({})  
   const classes = useStyles();
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
   
   const handleOnchange = (e) => {
     setAcompanhamento(prevState => ({
@@ -95,7 +101,7 @@ const AcompanhamentoListToolbar = ({props, procedimentos, medicos, tipoPgto}) =>
       }}
     >
      {
-      state.user.roles == 'admin' &&  <Button
+      user.roles == 'admin' &&  <Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}

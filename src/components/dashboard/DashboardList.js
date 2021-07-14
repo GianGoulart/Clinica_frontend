@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
   Box,
@@ -15,10 +15,22 @@ import {
   Button,
   TablePagination
 } from '@material-ui/core';
+import AppContext from 'src/AppContext';
 
 const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhamento}) => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const [user, setUser] = useState({});
+  const { state, dispatch } = useContext(AppContext)
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+    dispatch({
+      type: 'SET_USER',
+      payload: JSON.parse(window.sessionStorage.getItem("user"))
+    })
+
+  },[])
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -77,6 +89,7 @@ const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhame
                     key={dash.id}
                   >
                     <TableCell>
+                    {user.roles == 'admin' ?
                       <Button
                         onClick={()=>openHandleEdit(dash.id_procedimento)}
                       >
@@ -86,10 +99,18 @@ const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhame
                           size="small"
                         />
 
-                      </Button>
+                      </Button>:
+                      <Chip
+                        color={dash.status_financeiro=="OK"?"primary":"error"}
+                        label={dash.status_financeiro=="OK"?"OK":"Divergente"}
+                        size="small"
+                      />
+                    
+                    }
                     </TableCell>
                     <TableCell>
-                    <Button disabled = {dash.status_previa==" - "?false:false}
+                    {user.roles == 'admin' ?
+                      <Button disabled = {dash.status_previa==" - "?false:false}
                         onClick={()=>openHandleEditAcompanhamento(dash.id_procedimento)}
                       >
                       <Chip
@@ -97,10 +118,17 @@ const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhame
                         label={dash.status_previa==" - "?"OK":"Divergente"}
                         size="small"
                       />
-                      </Button>
+                      </Button>:
+                      <Chip
+                        color={dash.status_previa==" - "?"primary":"error"}
+                        label={dash.status_previa==" - "?"OK":"Divergente"}
+                        size="small"
+                      />
+                    }                    
                     </TableCell>
                     <TableCell>
-                    <Button disabled = {dash.status_previa==" - "?false:false}
+                    {user.roles == 'admin' ?
+                      <Button disabled = {dash.status_previa==" - "?false:false}
                         onClick={()=>openHandleEditAcompanhamento(dash.id_procedimento)}
                       >
                       <Chip
@@ -108,7 +136,12 @@ const DashboardList = ({dashboardlist, openHandleEdit, openHandleEditAcompanhame
                         label={dash.status_reembolso==" - "?"OK":"Divergente"}
                         size="small"
                       />
-                      </Button>
+                      </Button>:
+                      <Chip
+                      color={dash.status_reembolso==" - "?"primary":"error"}
+                      label={dash.status_reembolso==" - "?"OK":"Divergente"}
+                      size="small"
+                    />}
                     </TableCell>
                     <TableCell>
                       {dash.nome_paciente}

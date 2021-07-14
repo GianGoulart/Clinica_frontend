@@ -55,6 +55,7 @@ const Login = () => {
           payload: response.data
         })
 
+        window.sessionStorage.setItem("user", JSON.stringify(response.data))
         if (response.data != null){
           navigate("/app/dashboard")
         }

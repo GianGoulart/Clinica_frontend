@@ -45,6 +45,7 @@ const DashboardNavbar = ({ onMobileNavOpen, ...rest }) => {
                 type: 'SET_USER',
                 payload: {}
               })
+              window.sessionStorage.removeItem("user")
             navigate("/login")
           }}>
             <InputIcon/>

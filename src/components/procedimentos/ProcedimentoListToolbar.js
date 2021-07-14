@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {
   Box,
@@ -57,7 +57,13 @@ const ProcedimentoListToolbar = ({props, pacientes, medicos}) => {
   const [loading, setLoading] = useState(false)
   const [procedimento, setProcedimento] = useState({})  
   const classes = useStyles();
-  
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
+
   const handleOpenModalAdd = () => {
       setOpenModalAdd(true)
   }
@@ -108,7 +114,7 @@ const ProcedimentoListToolbar = ({props, pacientes, medicos}) => {
       }}
     >
        {
-      state.user.roles == 'admin' &&
+      user.roles == 'admin' &&
       <Button
         color="primary"
         variant="contained"

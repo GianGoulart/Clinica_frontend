@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState} from 'react';
 import PropTypes from 'prop-types';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import {
@@ -20,6 +20,12 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
   const {state, dispatch } = useContext(AppContext)
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -89,7 +95,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   Valor Líquido
                 </TableCell>
                 {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
                 <TableCell>
                   Ações
                 </TableCell>}
@@ -153,7 +159,7 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                   {comercial.valor_liquido.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}
                   </TableCell>
                   {
-                  state.user.roles == 'admin' &&
+                  user.roles == 'admin' &&
                   <TableCell>                  
                     <IconButton aria-label="editar" color="primary" onClick={() => openHandleEdit(comercial)}>
                       <Edit />

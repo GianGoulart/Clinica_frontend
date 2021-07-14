@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import {
   Box,
@@ -37,7 +37,13 @@ const MedicoListToolbar = (props) => {
   const [loading, setLoading] = useState(false)
   const [medico, setMedico] = useState({nome:"",especialidade:""})  
   const classes = useStyles();
-  
+  const [user, setUser] = useState({});
+
+  useEffect(()=>{
+    setUser(JSON.parse(window.sessionStorage.getItem("user")))
+
+  },[])
+
   const searches = [
     {
       name:"nome",
@@ -98,7 +104,7 @@ const MedicoListToolbar = (props) => {
       }}
     >
       {
-      state.user.roles == 'admin' && <Button
+      user.roles == 'admin' && <Button
         color="primary"
         variant="contained"
         onClick={handleOpenModalAdd}
