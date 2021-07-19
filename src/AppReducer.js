@@ -1,19 +1,14 @@
 const AppReducer = (state, action) => {
     switch (action.type) {
-        case "SET_KEYCLOAK":
-            return {
-                ...state,
-                keycloak: action.payload,
-            }
         case "SET_PACIENTES":
             return {
                 ...state,
-                pacientes: action.payload,
+                pacientes: action.payload == null ? [] : action.payload,
             }
         case "SET_MEDICOS":
             return {
                 ...state,
-                medicos: action.payload,
+                medicos: action.payload == null ? [] : action.payload,
             }
         case "SET_PACIENTE":
             return {
@@ -28,17 +23,17 @@ const AppReducer = (state, action) => {
         case "SET_PROCEDIMENTOS":
             return {
                 ...state,
-                procedimentos: action.payload,
+                procedimentos: action.payload == null ? [] : action.payload,
         }
         case "SET_COMERCIAL_LIST":
             return {
                 ...state,
-                comercial_list: action.payload,
+                comercial_list: action.payload == null ? [] : action.payload,
         }
         case "SET_PRODUCAO_LIST":
             return {
                 ...state,
-                producao_list: action.payload,
+                producao_list: action.payload == null ? [] : action.payload,
         }
         case "SET_COMERCIAL":
             return {
@@ -48,7 +43,7 @@ const AppReducer = (state, action) => {
         case "SET_ACOMPANHAMENTOS":
             return {
                 ...state,
-                acompanhamentos: action.payload,
+                acompanhamentos: action.payload == null ? [] : action.payload,
         }
         case "SET_ACOMPANHAMENTO":
             return {
