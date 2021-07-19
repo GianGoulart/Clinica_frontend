@@ -85,30 +85,38 @@ const ProcedimentoListResults = ({ procedimentos, openHandleEdit, openHandleDele
             <TableHead>
               <TableRow>
                 <TableCell onClick={()=>{
-                  setSortPaciente(sortPaciente=="asc"?"desc":"asc")
-                  orderBy("nome_paciente",sortPaciente)
-                }}>
+                    setSortPaciente(sortPaciente=="asc"?"desc":"asc")
+                    orderBy("nome_paciente",sortPaciente)
+                  }}
+                  style={{cursor:"pointer"}}
+                >
                   Paciente
                 </TableCell>
                 <TableCell onClick={()=>{
-                  setSortMedico(sortMedico=="asc"?"desc":"asc")
-                  orderBy("nome_medico",sortMedico)                  
-                }}>
+                    setSortMedico(sortMedico=="asc"?"desc":"asc")
+                    orderBy("nome_medico",sortMedico)                  
+                  }}
+                  style={{cursor:"pointer"}}
+                >
                   Médico
                 </TableCell>
                 <TableCell sortDirection="asc" onClick={()=>{
                     setSortProcedimento(sortProcedimento=="asc"?"desc":"asc")
                     orderBy("procedimento",sortProcedimento)
-                  }}>
+                  }}
+                  style={{cursor:"pointer"}}
+                >
                   Procedimento
                 </TableCell>
                 <TableCell onClick={()=>orderBy("local_procedimento","asc")}>
                   Local
                 </TableCell>
                 <TableCell onClick={()=>{
-                  setSortData(sortData=="asc"?"desc":"asc")
-                  orderBy("data",sortData)
-                }}>
+                    setSortData(sortData=="asc"?"desc":"asc")
+                    orderBy("data",sortData)
+                  }}
+                  style={{cursor:"pointer"}}
+                >
                   Data
                 </TableCell>                
                 <TableCell>

@@ -89,16 +89,22 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                 <TableCell>
                   Data
                 </TableCell>
-                  <TableCell onClick={()=>orderBy("nome_paciente","asc")}>
+                  <TableCell onClick={()=>orderBy("nome_paciente","asc")}
+                    style={{cursor:"pointer"}}
+                  >
                   Paciente
                 </TableCell>
                 <TableCell>
                   Procedimento
                 </TableCell>
-                <TableCell onClick={()=>orderBy("nome_medico","asc")}>
+                <TableCell onClick={()=>orderBy("nome_medico","asc")}
+                  style={{cursor:"pointer"}}
+                >
                   Médico Principal
                 </TableCell>
-                <TableCell onClick={()=>orderBy("nome_medico_part","asc")}>
+                <TableCell onClick={()=>orderBy("nome_medico_part","asc")}
+                  style={{cursor:"pointer"}}
+                >
                   Médico Participante
                 </TableCell>
                 <TableCell>
@@ -116,16 +122,24 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                 <TableCell>
                   Forma Pgto
                 </TableCell>
-                <TableCell onClick={()=>orderBy("data_emissao_nf","desc")}>
+                <TableCell onClick={()=>orderBy("data_emissao_nf","desc")}
+                  style={{cursor:"pointer"}}
+                >
                   Emissão NF
                 </TableCell>
-                <TableCell onClick={()=>orderBy("data_vencimento","desc")}>
+                <TableCell onClick={()=>orderBy("data_vencimento","desc")}
+                  style={{cursor:"pointer"}}
+                >
                   Vencimento
                 </TableCell>
-                <TableCell onClick={()=>orderBy("data_pagamento","desc")}>
+                <TableCell onClick={()=>orderBy("data_pagamento","desc")}
+                  style={{cursor:"pointer"}}
+                >
                   Data Pagamento
                 </TableCell>
-                <TableCell onClick={()=>orderBy("data_compensacao","desc")}>
+                <TableCell onClick={()=>orderBy("data_compensacao","desc")}
+                  style={{cursor:"pointer"}}
+                >
                   Data Compensação
                 </TableCell>
                 <TableCell>

@@ -82,29 +82,45 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
                 <TableCell>
                   Procedimento
                 </TableCell>
-                <TableCell onClick={()=>orderBy("envio_protocolo","desc")}>
+                <TableCell onClick={()=>orderBy("envio_protocolo","desc")}
+                  style={{cursor:"pointer"}}
+                >
                   Protocolo
                 </TableCell>
-                <TableCell onClick={()=>orderBy("solicitacao_previa","desc")}>
-                  Prévia
+                <TableCell onClick={()=>orderBy("solicitacao_previa","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Prévia
                 </TableCell>
-                <TableCell onClick={()=>orderBy("confirmacao_solicitacao","desc")}>
-                  Confirmação
+                <TableCell onClick={()=>orderBy("confirmacao_solicitacao","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Confirmação
                 </TableCell>
-                <TableCell onClick={()=>orderBy("finalizacao_previa","desc")}>
-                  Finalização
+                <TableCell onClick={()=>orderBy("finalizacao_previa","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Finalização
                 </TableCell>
-                <TableCell onClick={()=>orderBy("envio_convenio","desc")}>
-                  Convenio
+                <TableCell onClick={()=>orderBy("envio_convenio","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Convenio
                 </TableCell>
-                <TableCell onClick={()=>orderBy("liberacao","desc")}>
-                  Liberação
+                <TableCell onClick={()=>orderBy("liberacao","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Liberação
                 </TableCell>
-                <TableCell onClick={()=>orderBy("repasse_paciente","desc")}>
-                  Repasse Paciente
+                <TableCell onClick={()=>orderBy("repasse_paciente","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Repasse Paciente
                 </TableCell>
-                <TableCell onClick={()=>orderBy("repasse_clinica","desc")}>
-                  Repasse Clinica
+                <TableCell onClick={()=>orderBy("repasse_clinica","desc")}
+                  style={{cursor:"pointer"}}
+                >
+                    Repasse Clinica
                 </TableCell>
                 {
                   user.roles == 'admin' &&

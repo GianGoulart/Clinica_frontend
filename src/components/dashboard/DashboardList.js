@@ -106,27 +106,35 @@ const DashboardList = ({openHandleEdit, openHandleEditAcompanhamento}) => {
                     Status Reembolso
                   </TableCell>
                   <TableCell sortDirection="asc" onClick={()=>{
-                    setSortPaciente(sortPaciente=="asc"?"desc":"asc")
-                    orderBy("nome_paciente",sortPaciente)
-                  }}>
+                      setSortPaciente(sortPaciente=="asc"?"desc":"asc")
+                      orderBy("nome_paciente",sortPaciente)
+                    }}
+                    style={{cursor:"pointer"}}
+                  >
                     Nome Paciente
                   </TableCell>
                   <TableCell sortDirection="asc" onClick={()=>{
-                    setSortMedico(sortMedico=="asc"?"desc":"asc")
-                    orderBy("nome_medico",sortMedico)
-                  }}>
+                      setSortMedico(sortMedico=="asc"?"desc":"asc")
+                      orderBy("nome_medico",sortMedico)
+                    }}
+                    style={{cursor:"pointer"}}
+                  >
                     Nome Médico
                   </TableCell>
                   <TableCell sortDirection="asc" onClick={()=>{
-                    setSortProcedimento(sortProcedimento=="asc"?"desc":"asc")
-                    orderBy("procedimento",sortProcedimento)
-                  }}>
+                      setSortProcedimento(sortProcedimento=="asc"?"desc":"asc")
+                      orderBy("procedimento",sortProcedimento)
+                    }}
+                    style={{cursor:"pointer"}}
+                  >
                     Procedimento
                   </TableCell>
                   <TableCell sortDirection="asc" onClick={()=>{
-                    setSortData(sortData=="asc"?"desc":"asc")
-                    orderBy("data_procedimento",sortData)
-                  }}>
+                      setSortData(sortData=="asc"?"desc":"asc")
+                      orderBy("data_procedimento",sortData)
+                    }}
+                    style={{cursor:"pointer"}}
+                  >
                     Data Procedimento
                   </TableCell>
                   <TableCell sortDirection="desc">
