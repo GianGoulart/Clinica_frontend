@@ -22,6 +22,42 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
   const {state, dispatch } = useContext(AppContext)
   const [user, setUser] = useState({});
 
+  function dynamicSort(property, order) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    if (order == "asc"){
+      return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+      }
+
+    }else{
+      return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+        return result * sortOrder;
+      }
+    }
+  }
+
+
+  const orderBy = (field, order) => {
+    acompanhamentos.sort(dynamicSort(field, order))   
+    dispatch({
+      type: 'SET_ACOMPANHAMENTOS',
+      payload: acompanhamentos,
+    }) 
+  };
+
   useEffect(()=>{
     setUser(JSON.parse(window.sessionStorage.getItem("user")))
 
@@ -46,28 +82,28 @@ const AcompanhamentoListResults = ({ acompanhamentos, openHandleEdit, openHandle
                 <TableCell>
                   Procedimento
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("envio_protocolo","desc")}>
                   Protocolo
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("solicitacao_previa","desc")}>
                   Prévia
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("confirmacao_solicitacao","desc")}>
                   Confirmação
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("finalizacao_previa","desc")}>
                   Finalização
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("envio_convenio","desc")}>
                   Convenio
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("liberacao","desc")}>
                   Liberação
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("repasse_paciente","desc")}>
                   Repasse Paciente
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("repasse_clinica","desc")}>
                   Repasse Clinica
                 </TableCell>
                 {

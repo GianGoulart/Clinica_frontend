@@ -22,7 +22,7 @@ import {
 import NavItem from './NavItem';
 
 const user = {
-  avatar: '/static/images/avatars/clinica_abrao.jpg',
+  avatar: '/static/images/avatars/logo_clinica.png',
 };
 
 const items = [

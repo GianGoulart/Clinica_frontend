@@ -21,6 +21,41 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
   const [page, setPage] = useState(0);
   const {state, dispatch } = useContext(AppContext)
   const [user, setUser] = useState({});
+  const [sortPaciente,setSortPaciente] = useState("asc")
+  const [sortMedico,setSortMedico] = useState("asc")
+  const [sortProcedimento,setSortProcedimento] = useState("asc")
+  const [sortMedicoPart,setSortMedicoPart] = useState("asc")
+  const [sortEmissao,setSortEmissao] = useState("desc")
+  const [sortVencimento,setSortVencimento] = useState("desc")
+  const [sortPgto,setSortPgto] = useState("desc")
+  const [sortCompensacao,setSortCompensacao] = useState("desc")
+  
+  function dynamicSort(property, order) {
+    var sortOrder = 1;
+    if(property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+
+    if (order == "asc"){
+      return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+      }
+
+    }else{
+      return function (a,b) {
+        /* next line works with strings and numbers, 
+         * and you may want to customize it to your needs
+         */
+        var result = (a[property] > b[property]) ? -1 : (a[property] < b[property]) ? 1 : 0;
+        return result * sortOrder;
+      }
+    }
+  }
 
   useEffect(()=>{
     setUser(JSON.parse(window.sessionStorage.getItem("user")))
@@ -35,6 +70,14 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
     setPage(newPage);
   };
 
+  const orderBy = (field, order) => {
+    comercial_list.sort(dynamicSort(field, order))   
+    dispatch({
+      type: 'SET_COMERCIAL_LIST',
+      payload: comercial_list,
+    }) 
+  };
+
   return (
     <>
     <Card>
@@ -46,16 +89,16 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                 <TableCell>
                   Data
                 </TableCell>
-                <TableCell>
+                  <TableCell onClick={()=>orderBy("nome_paciente","asc")}>
                   Paciente
                 </TableCell>
                 <TableCell>
                   Procedimento
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("nome_medico","asc")}>
                   Médico Principal
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("nome_medico_part","asc")}>
                   Médico Participante
                 </TableCell>
                 <TableCell>
@@ -73,16 +116,16 @@ const ComercialListResults = ({ comercial_list, openHandleEdit, openHandleDelete
                 <TableCell>
                   Forma Pgto
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("data_emissao_nf","desc")}>
                   Emissão NF
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("data_vencimento","desc")}>
                   Vencimento
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("data_pagamento","desc")}>
                   Data Pagamento
                 </TableCell>
-                <TableCell>
+                <TableCell onClick={()=>orderBy("data_compensacao","desc")}>
                   Data Compensação
                 </TableCell>
                 <TableCell>
