@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { Box, Container, withStyles } from '@material-ui/core';
 import ComercialListResults from '../../components/comercial/ComercialListResults';
 import ComercialListToolbar from '../../components/comercial/ComercialListToolbar';
 import AppContext from 'src/AppContext';
 import Loading from 'src/components/loading/Loading';
-import { ComercialService, MedicoService,  ProcedimentoService } from 'src/services/Services';
+import { ComercialService} from 'src/services/Services';
 import ModalEditComercial from 'src/components/comercial/ModalEditComercial';
 import ModalDeleteComercial from 'src/components/comercial/ModalDeleteComercial';
 
@@ -14,6 +15,14 @@ const Comercial = () => {
     const [openEdit, setOpenEdit] = useState({open:false})
     const [openDelete, setOpenDelete] = useState({open:false})
     const [comercial, setComercial] = useState({})
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+      if (state.user == null) {
+        navigate("/login")
+      }
+    },[])
+
     useEffect(() => {
       (async () => {
         try {

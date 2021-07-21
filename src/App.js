@@ -3,7 +3,6 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import { useRoutes } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import GlobalStyles from 'src/components/GlobalStyles';
-import 'src/mixins/chartjs';
 import theme from 'src/theme';
 import routes from 'src/routes';
 import AppContext from './AppContext';
@@ -24,7 +23,7 @@ const appContext = {
     comercial:{},
     acompanhamentos:[],
     acompanhamento:{},
-    user:{},
+    user:null,
     tipoPagto : [
       {value: 1, label: "Reembolso"},
       {value: 2, label: "Extra"},

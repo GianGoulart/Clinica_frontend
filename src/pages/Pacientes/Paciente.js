@@ -7,13 +7,21 @@ import Loading from 'src/components/loading/Loading';
 import { PacienteService } from 'src/services/Services';
 import ModalEditPaciente from 'src/components/pacientes/ModalEditPaciente';
 import ModalDeletePaciente from 'src/components/pacientes/ModalDeletePaciente';
+import { useNavigate } from 'react-router-dom'; 
 
 const Paciente = () => {
-   const [loading, setLoading] = useState(false)
-   const { state, dispatch } = useContext(AppContext)
-   const [openEdit, setOpenEdit] = useState({open:false})
-   const [openDelete, setOpenDelete] = useState({open:false})
-   const [paciente, setPaciente] = useState({})
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false)
+  const { state, dispatch } = useContext(AppContext)
+  const [openEdit, setOpenEdit] = useState({open:false})
+  const [openDelete, setOpenDelete] = useState({open:false})
+  const [paciente, setPaciente] = useState({})
+
+  useEffect(()=>{
+    if (state.user == null) {
+      navigate("/login")
+    }
+  },[])
 
    useEffect(() => {
       (async () => {

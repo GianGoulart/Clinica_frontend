@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { Box, Container, withStyles } from '@material-ui/core';
 import ProcedimentoListResults from '../../components/procedimentos/ProcedimentoListResults';
 import ProcedimentoListToolbar from '../../components/procedimentos/ProcedimentoListToolbar';
@@ -7,15 +8,22 @@ import Loading from 'src/components/loading/Loading';
 import { MedicoService, PacienteService, ProcedimentoService } from 'src/services/Services';
 import ModalEditProcedimento from 'src/components/procedimentos/ModalEditProcedimento';
 import ModalDeleteProcedimento from 'src/components/procedimentos/ModalDeleteProcedimento';
-import moment from "moment";
 
 const Procedimento = () => {
+    const navigate = useNavigate();
+
     const [loading, setLoading] = useState(false)
     const { state, dispatch } = useContext(AppContext)
     const [openEdit, setOpenEdit] = useState({open:false})
     const [openDelete, setOpenDelete] = useState({open:false})
     const [procedimento, setProcedimento] = useState({})
     
+    useEffect(()=>{
+      if (state.user == null) {
+        navigate("/login")
+      }
+    },[])  
+
     useEffect(() => {
       (async () => {
         try {
@@ -82,7 +90,7 @@ const Procedimento = () => {
                 </Box>
             ):(
                 <Box sx={{ pt: 3 }}>
-                  {state.procedimentos.length > 0 
+                  {state.procedimentos.length > 0  
                   ?(<ProcedimentoListResults procedimentos={state.procedimentos} openHandleEdit={handleOpenModalEdit} openHandleDelete={handleOpenModalDelete}/>)
                   :null}
                 </Box>

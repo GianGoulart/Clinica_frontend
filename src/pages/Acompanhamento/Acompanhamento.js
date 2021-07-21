@@ -4,10 +4,10 @@ import AcompanhamentoListResults from '../../components/acompanhamento/Acompanha
 import AcompanhamentoListToolbar from '../../components/acompanhamento/AcompanhamentoListToolbar';
 import AppContext from 'src/AppContext';
 import Loading from 'src/components/loading/Loading';
-import { AcompanhamentoService, ProcedimentoService } from 'src/services/Services';
+import { AcompanhamentoService } from 'src/services/Services';
 import ModalEditAcompanhamento from 'src/components/acompanhamento/ModalEditAcompanhamento';
 import ModalDeleteAcompanhamento from 'src/components/acompanhamento/ModalDeleteAcompanhamento';
-import moment from "moment";
+import { useNavigate } from 'react-router-dom'; 
 
 const Acompanhamento = () => {
     const [loading, setLoading] = useState(false)
@@ -15,7 +15,14 @@ const Acompanhamento = () => {
     const [openEdit, setOpenEdit] = useState({open:false})
     const [openDelete, setOpenDelete] = useState({open:false})
     const [acompanhamento, setAcompanhamento] = useState({})
-    
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+      if (state.user == null) {
+        navigate("/login")
+      }
+    },[])
+
     useEffect(() => {
       (async () => {
         try {

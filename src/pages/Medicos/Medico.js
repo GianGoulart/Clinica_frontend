@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
 import { Box, Container, withStyles } from '@material-ui/core';
 import MedicoListResults from '../../components/medicos/MedicoListResults';
 import MedicoListToolbar from '../../components/medicos/MedicoListToolbar';
@@ -14,6 +15,13 @@ const Medico = () => {
     const [openEdit, setOpenEdit] = useState({open:false})
     const [openDelete, setOpenDelete] = useState({open:false})
     const [medico, setMedico] = useState({})
+    const navigate = useNavigate();
+    
+    useEffect(()=>{
+      if (state.user == null) {
+        navigate("/login")
+      }
+    },[])
     
     useEffect(() => {
       (async () => {
