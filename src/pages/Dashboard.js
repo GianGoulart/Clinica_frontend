@@ -102,9 +102,9 @@ const Dashboard = () => {
       (async () => {
         try {
           setLoading(true)
-          const response = await Comercialervice.getComercialByProcedimento(id_procedimento);            
+          const response = await Comercialervice.getComercialByProcedimento(id_procedimento);        
           setComercial(response.data)
-          if (response.data.id == ""){
+          if (response.data.length == 0){
             setOpenModalAdd({open:true})
           }else{
             setOpenEdit({open:true})

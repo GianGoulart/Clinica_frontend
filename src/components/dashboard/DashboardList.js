@@ -68,7 +68,7 @@ const DashboardList = ({openHandleEdit, openHandleEditAcompanhamento}) => {
       payload: state.producao_list,
     }) 
 
-  },[])
+  },[state.producao_list])
 
   const orderBy = (field, sort) => {
     

@@ -50,7 +50,9 @@ const Comercial = () => {
     const handleCloseModalDelete = () => setOpenDelete(false)
     const handleOpenModalDelete = (id) => setOpenDelete({open:true,id})
     const handleOpenModalEdit = (comercial) =>{
-      setComercial(comercial)
+      var list = [] 
+      list.push(comercial)
+      setComercial(list)
       setOpenEdit({open:true})
     }
     const handleCloseModalEdit = () => {
