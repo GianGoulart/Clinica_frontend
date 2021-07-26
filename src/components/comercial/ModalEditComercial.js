@@ -17,7 +17,7 @@ import {
     FormControl,
     FormHelperText
 } from "@material-ui/core";
-import { ComercialService } from '../../services/Services'
+import { ComercialService, DashboardService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddComercialStyle from "./ModalAddComercialStyle"
 import { useForm } from "react-hook-form";
@@ -201,6 +201,13 @@ const ModalEditComercial = ({ open, onClose, medicos, procedimentos, comercialEd
                 type: 'SET_COMERCIAL_LIST',
                 payload: response.data,
             })
+
+            const producao = await DashboardService.getDashboard()
+            dispatch({
+                type: 'SET_PRODUCAO_LIST',
+                payload: producao.data,
+            })
+
             setLoading(false)
             onClose()
         }

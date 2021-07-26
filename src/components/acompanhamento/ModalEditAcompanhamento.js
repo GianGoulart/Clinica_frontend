@@ -16,7 +16,7 @@ import {
     makeStyles,
     FormControl
 } from "@material-ui/core";
-import { AcompanhamentoService } from '../../services/Services'
+import { AcompanhamentoService, DashboardService } from '../../services/Services'
 import AppContext from '../../AppContext';
 import ModalAddAcompanhamentoStyle from "./ModalAddAcompanhamentoStyle"
 import { useForm } from "react-hook-form";
@@ -115,7 +115,14 @@ const ModalEditAcompanhamento = ({ open, onClose, procedimentos, acompanhamentoE
             dispatch({
                 type: 'SET_ACOMPANHAMENTOS',
                 payload: response.data,
-            })              
+            })
+            
+            const producao = await DashboardService.getDashboard()
+            dispatch({
+                type: 'SET_PRODUCAO_LIST',
+                payload: producao.data,
+            })
+
             setLoading(false)
             onClose()
         }
