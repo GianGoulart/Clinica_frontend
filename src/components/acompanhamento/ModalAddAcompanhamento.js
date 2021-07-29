@@ -68,6 +68,8 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
     const classes = useStyles()
 
     const handleOnchange = (e) => {
+
+        console.log(e.target.value)
         setAcompanhamento(prevState => ({
           ...prevState,
           [e.target.name]:e.target.value
@@ -182,7 +184,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"confirmacao_solicitacao"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Confirmação Solicitação"}
-                                            value={acompanhamento.confirmacao_solicitacao>0?acompanhamento.confirmacao_solicitacao:""}                                            
+                                            value={acompanhamento.confirmacao_solicitacao}                                            
                                             classes={classes}
                                         />
                                     </Grid>                                 
@@ -197,7 +199,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"finalizacao_previa"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Finalização Previa"}
-                                            value={acompanhamento.finalizacao_previa>0?acompanhamento.finalizacao_previa:""}
+                                            value={acompanhamento.finalizacao_previa}
                                             classes={classes}
                                         />
                                     </Grid>                                 
@@ -205,7 +207,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"envio_convenio"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Envio Convenio"}
-                                            value={acompanhamento.envio_convenio>0?acompanhamento.envio_convenio:""}
+                                            value={acompanhamento.envio_convenio}
                                             classes={classes}
                                         />
                                     </Grid>                                 
@@ -213,7 +215,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"liberacao"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Liberação"}
-                                            value={acompanhamento.liberacao>0?acompanhamento.liberacao:""}
+                                            value={acompanhamento.liberacao}
                                             classes={classes}
                                         />
                                     </Grid>                                 
@@ -221,7 +223,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"repasse_paciente"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Repasse Paciente"}
-                                            value={acompanhamento.repasse_paciente>0?acompanhamento.repasse_paciente:""}
+                                            value={acompanhamento.repasse_paciente}
                                             classes={classes}
                                         />
                                     </Grid>                                 
@@ -229,7 +231,7 @@ const ModalAddAcompanhamento = ({ open, onClose, procedimentos}) => {
                                         <Input type={"date"} name={"repasse_clinica"}  
                                             onChange={e => handleOnchange(e)}
                                             label={"Repasse Clinica"}
-                                            value={acompanhamento.repasse_clinica>0?acompanhamento.repasse_clinica:""}
+                                            value={acompanhamento.repasse_clinica}
                                             classes={classes}
                                         />
                                     </Grid>                                 
